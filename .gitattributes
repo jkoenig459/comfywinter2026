@@ -1,0 +1,12 @@
+* text=auto
+
+*.cs text diff=csharp
+*.shader text
+*.cginc text
+*.hlsl text
+
+*.png binary
+*.jpg binary
+*.psd binary
+*.wav binary
+*.mp3 binary
