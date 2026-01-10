@@ -5,6 +5,6 @@ public class BootLoader : MonoBehaviour
 {
     private void Start()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Playground");
     }
 }
