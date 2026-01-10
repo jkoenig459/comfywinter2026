@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|c:\\users\\josh\\desktop\\game dev\\comfyjam_winter26\\penguinsim\\assets\\scripts\\prototype\\buildmode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\prototype\\buildmode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\assets\\scripts\\prototype\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\prototype\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|c:\\users\\josh\\desktop\\game dev\\comfyjam_winter26\\penguinsim\\assets\\scripts\\prototype\\selectable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\assets\\scripts\\prototype\\selectable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E60A202D-DBCF-43BF-00F7-02D7A266E226}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\prototype\\selectable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -50,11 +54,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "BuildMode.cs",
+              "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\BuildMode.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\BuildMode.cs",
+              "ToolTip": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\BuildMode.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Prototype\\BuildMode.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAIwFIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-10T18:06:55.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "CommandInput.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\CommandInput.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\CommandInput.cs",
@@ -66,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "PenguinUnit.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\PenguinUnit.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\PenguinUnit.cs",
@@ -78,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ResourceNode.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\ResourceNode.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\ResourceNode.cs",
@@ -90,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "SelectionManager.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\SelectionManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\SelectionManager.cs",
@@ -98,12 +115,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Prototype\\SelectionManager.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAxwB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-10T00:16:50.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-10T00:16:50.204Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Selectable.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\Selectable.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\Selectable.cs",
@@ -111,12 +127,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Prototype\\Selectable.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-10T00:16:13.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-10T00:16:13.048Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "PauseInput.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\PauseInput.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\PauseInput.cs",
@@ -128,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DebugHUD.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\DebugHUD.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\DebugHUD.cs",
@@ -140,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Prototype\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Prototype\\GameManager.cs",
@@ -152,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Main.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\Main.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Main.cs",
@@ -163,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BootLoader.cs",
               "DocumentMoniker": "C:\\Users\\Josh\\Desktop\\Game Dev\\ComfyJam_Winter26\\PenguinSim\\Assets\\Scripts\\BootLoader.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BootLoader.cs",
