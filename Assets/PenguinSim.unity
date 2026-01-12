@@ -406,9 +406,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1119652073
+  m_SortingLayer: 1
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5216,7 +5216,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000177743bd
+  m_ApplyToSortingLayers: 00000000177743bd43cdd498
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -6079,6 +6079,10 @@ PrefabInstance:
       propertyPath: dropoffPoint
       value: 
       objectReference: {fileID: 1030690270}
+    - target: {fileID: 2577683182509898830, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6104658651679444948, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.2
@@ -6122,6 +6126,18 @@ PrefabInstance:
     - target: {fileID: 6246836616639282338, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: m_Name
       value: Penguin
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246836616639282338, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608196764086033913, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608196764086033913, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1730884285
       objectReference: {fileID: 0}
     - target: {fileID: 8785581016695309917, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: stampsPS
