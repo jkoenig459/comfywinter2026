@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CommandInput : MonoBehaviour
 {
@@ -20,25 +20,46 @@ public class CommandInput : MonoBehaviour
         var selectedObj = SelectionManager.I.SelectedObject;
         if (selectedObj == null) return;
 
-        var unit = selectedObj.GetComponent<PenguinUnit>();
+        var unit = selectedObj.GetComponentInParent<PenguinJobs>();
         if (unit == null) return;
+
+        // Block orders while dropping off resources
+        if (!unit.CanAcceptOrders)
+            return;
 
         if (cam == null) cam = Camera.main;
         Vector2 world = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        // Check if clicked a resource node
         var hit = Physics2D.Raycast(world, Vector2.zero);
         if (hit.collider != null)
         {
+            var pile = hit.collider.GetComponentInParent<ResourcePile>();
+            if (pile != null)
+            {
+                unit.AssignPickup(pile);
+                return;
+            }
+
             var node = hit.collider.GetComponentInParent<ResourceNode>();
             if (node != null)
             {
-                unit.AssignGather(node);
+                if (node.type == ResourceType.Food)
+                {
+                    unit.AssignFish(node);
+                    return;
+                }
+
+                if (node.type == ResourceType.Ice)
+                {
+                    unit.AssignCutIce(node);
+                    return;
+                }
+
+                unit.AssignMove(node.transform.position);
                 return;
             }
         }
 
-        // Otherwise move command
         unit.AssignMove(world);
     }
 }

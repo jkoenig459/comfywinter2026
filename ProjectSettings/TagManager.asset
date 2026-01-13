@@ -45,6 +45,9 @@ TagManager:
   - name: BehindPenguin
     uniqueID: 3175315223
     locked: 0
+  - name: Resources
+    uniqueID: 4096463187
+    locked: 0
   - name: Penguins
     uniqueID: 2564083011
     locked: 0
