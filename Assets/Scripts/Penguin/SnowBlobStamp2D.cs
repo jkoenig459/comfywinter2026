@@ -36,7 +36,6 @@ public class SnowBlobStamps2D : MonoBehaviour
 
         lastPos = transform.position;
 
-        // Harden settings so prefab clicks don't break it
         var main = stampsPS.main;
         main.simulationSpace = ParticleSystemSimulationSpace.World;
         main.startSpeed = 0f;

@@ -51,6 +51,37 @@ MonoBehaviour:
   size: 1.4
   alpha: 0.65
   jitter: 0.1
+--- !u!1 &4377880143200011371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6232462271331857301}
+  m_Layer: 7
+  m_Name: CarrySocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6232462271331857301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377880143200011371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.065, y: 0.625, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6104658651679444948}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6246836616639282338
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,8 +95,11 @@ GameObject:
   - component: {fileID: 6663704331084169084}
   - component: {fileID: 4798741843189858295}
   - component: {fileID: 1804715021627938178}
-  - component: {fileID: 2206185588536114169}
   - component: {fileID: 1018208606007899144}
+  - component: {fileID: 3888193284424340061}
+  - component: {fileID: 5310347144937209662}
+  - component: {fileID: 180694866203800584}
+  - component: {fileID: 5875312484630908951}
   m_Layer: 7
   m_Name: Penguin 1
   m_TagString: Untagged
@@ -87,6 +121,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7781724325543743620}
+  - {fileID: 6232462271331857301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8608196764086033913
@@ -135,7 +170,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1730884285
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 04071b064dbd72346af2f2745fdcafc9, type: 3}
@@ -224,23 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   highlight: {fileID: 0}
---- !u!114 &2206185588536114169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6246836616639282338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84632d6019a682e43b1f4f2745e1bc61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PenguinUnit
-  moveSpeed: 2
-  dropoffPoint: {fileID: 0}
-  workTimer: 0
-  carrying: 0
-  animator: {fileID: 0}
 --- !u!95 &1018208606007899144
 Animator:
   serializedVersion: 7
@@ -263,3 +281,70 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3888193284424340061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be61797e3eeba744ca153d0b1b5d62b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenguinJobs
+  dropoffPoint: {fileID: 0}
+  fishPilePrefab: {fileID: 0}
+  icePilePrefab: {fileID: 0}
+  fishInterval: 2.5
+  fishCaughtAnimDuration: 2.3
+  fishAddToPileDelay: 0.1
+  fishPileOffset: {x: 0, y: 1.25}
+  iceInterval: 2
+  iceFinishedAnimDuration: 2
+  iceAddToPileDelay: 0.1
+  icePileOffset: {x: 0, y: 1.25}
+  collectHold: 0.45
+--- !u!114 &5310347144937209662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e7bab8490db7d47b4c3987139f479e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenguinMover
+  moveSpeed: 2
+  defaultWorkOffset: {x: 0, y: 0}
+  fishingOffset: {x: 1, y: 0}
+  iceOffset: {x: 0, y: 0}
+--- !u!114 &180694866203800584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d2263115d5d8846b796d9bc363ae3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenguinAnimator
+  animator: {fileID: 0}
+  sprite: {fileID: 0}
+--- !u!114 &5875312484630908951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d1eb924f3349544ab42e94bba97415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenguinCarryVisual
+  carrySocket: {fileID: 6232462271331857301}

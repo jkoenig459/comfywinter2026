@@ -6,7 +6,6 @@ public class Selectable : MonoBehaviour
 
     private void Awake()
     {
-        // Auto-find a child named "Highlight" if not assigned
         if (highlight == null)
         {
             var t = transform.Find("Highlight");
