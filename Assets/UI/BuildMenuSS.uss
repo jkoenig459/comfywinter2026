@@ -1,0 +1,143 @@
+#MenuRoot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+
+    width: 560px;
+    height: 300px;
+
+    flex-direction: row;
+    align-items: stretch;
+
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    background-color: rgba(0, 0, 0, 0.10);
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* LEFT PANEL */
+#LeftCol {
+    width: 200px;
+    height: 100%;
+    flex-direction: column;
+
+    margin-right: 14px;
+
+    background-color: rgba(235, 235, 235, 0.98);
+
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+
+    border-left-color: rgba(0,0,0,0.35);
+    border-right-color: rgba(0,0,0,0.35);
+    border-top-color: rgba(0,0,0,0.35);
+    border-bottom-color: rgba(0,0,0,0.35);
+}
+
+#LeftCol Button {
+    margin-bottom: 10px;
+}
+
+/* RIGHT PANEL */
+#RightCol {
+    flex-grow: 1;
+    height: 100%;
+    flex-direction: column;
+
+    background-color: rgba(235, 235, 235, 0.98);
+
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+
+    border-left-color: rgba(0,0,0,0.35);
+    border-right-color: rgba(0,0,0,0.35);
+    border-top-color: rgba(0,0,0,0.35);
+    border-bottom-color: rgba(0,0,0,0.35);
+
+    align-items: center;
+}
+
+#RightTop {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#RightBottom {
+    flex-direction: column;
+    margin-top: auto;
+    width: 100%;
+    align-items: center;
+}
+
+#ItemName, #ItemDesc, #ItemCost {
+    color: rgba(10, 10, 10, 1);
+}
+
+#ItemName {
+    font-size: 22px;
+    -unity-font-style: bold;
+    margin-bottom: 6px;
+
+    -unity-text-align: middle-center;
+    align-self: center;
+}
+
+#ItemDesc {
+    font-size: 14px;
+    white-space: normal;
+
+    -unity-text-align: upper-left;
+
+    width: 75%;
+    align-self: center;
+
+    margin-bottom: 0px;
+}
+
+#ItemCost {
+    font-size: 16px;
+    -unity-font-style: bold;
+    margin-bottom: 10px;
+
+    -unity-text-align: middle-center;
+    align-self: center;
+}
+
+#BuildBtn {
+    align-self: center;
+    width: 150px;
+    margin-bottom: 4px;
+}

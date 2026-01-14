@@ -14,8 +14,8 @@ TagManager:
   - UI
   - Buildings
   - Units
-  - 
-  - 
+  - Resources
+  - =
   - 
   - 
   - 
@@ -48,8 +48,14 @@ TagManager:
   - name: Resources
     uniqueID: 4096463187
     locked: 0
+  - name: Buildings
+    uniqueID: 2076254207
+    locked: 0
   - name: Penguins
     uniqueID: 2564083011
+    locked: 0
+  - name: Ghost
+    uniqueID: 4248521341
     locked: 0
   m_RenderingLayers:
   - Default
