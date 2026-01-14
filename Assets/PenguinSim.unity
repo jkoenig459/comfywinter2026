@@ -5195,7 +5195,7 @@ GameObject:
   - component: {fileID: 829573595}
   - component: {fileID: 829573594}
   - component: {fileID: 829573593}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: IceNode
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -5582,6 +5582,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2577683182509898830, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3888193284424340061, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: dropoffPoint
       value: 
@@ -5597,6 +5601,10 @@ PrefabInstance:
     - target: {fileID: 3888193284424340061, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: fishCaughtAnimDuration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377880143200011371, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5310347144937209662, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: iceOffset.y
@@ -5653,6 +5661,10 @@ PrefabInstance:
     - target: {fileID: 6246836616639282338, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: m_Name
       value: Penguin 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246836616639282338, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8785581016695309917, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: lifetime

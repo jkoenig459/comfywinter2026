@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\relic\\Desktop\\comfywinter2026\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\relic\\desktop\\comfywinter2026\\assets\\scripts\\penguin\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\relic\\desktop\\comfywinter2026\\assets\\scripts\\build mode\\buildmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\buildmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,6 +31,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "SelectionManager.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAswEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T18:31:14.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "BuildMenuController.cs",
               "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
@@ -39,7 +56,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BuildMenuController1_old.cs",
               "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs",
@@ -50,7 +67,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BuildModePlacer.cs",
               "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
