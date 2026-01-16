@@ -3,8 +3,8 @@
     <ui:VisualElement name="MenuRoot" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="LeftCol" class="leftCol" style="flex-grow: 1; align-items: center; justify-content: center; width: 10%;">
             <ui:Button text="House&#10;" name="HouseBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
-            <ui:Button text="Storage&#10;" name="StorageBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
-            <ui:Button text="Research&#10;" name="ReasearchBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
+            <ui:Button text="Storage" name="StorageBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
+            <ui:Button text="Upgrade HQ&#10;" name="ReasearchBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="RightCol" class="rightCol" style="flex-grow: 1; justify-content: space-between; align-items: flex-start;">
             <ui:VisualElement name="RightTop" class="rightTop" style="flex-grow: 1; align-items: stretch;">
@@ -13,7 +13,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="RightBottom" class="rightBottom" style="flex-grow: 1;">
                 <ui:Label text="Item Cost&#10;" name="ItemCost" style="position: absolute; white-space: pre-wrap; text-overflow: clip; flex-wrap: wrap; width: 144px; top: 50px; left: auto;"/>
-                <ui:Button text="Build&#10;" name="BuildBtn" style="flex-shrink: 0; width: 75px; height: 10px; right: auto; left: auto; top: 100px; flex-grow: 0; align-items: auto; align-self: auto; align-content: auto; bottom: auto;"/>
+                <ui:Button text="Confirm&#10;" name="BuildBtn" style="flex-shrink: 0; width: 75px; height: 10px; right: auto; left: auto; top: 100px; flex-grow: 0; align-items: auto; align-self: auto; align-content: auto; bottom: auto;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

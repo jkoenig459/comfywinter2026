@@ -3,16 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\relic\\Desktop\\comfywinter2026\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\relic\\desktop\\comfywinter2026\\assets\\scripts\\build mode\\buildmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\buildmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\relic\\desktop\\comfywinter2026\\assets\\scripts\\penguin\\snowblobstamp2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\snowblobstamp2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\relic\\desktop\\comfywinter2026\\assets\\scripts\\penguin\\penguinmover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\penguinmover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\housemenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\housemenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\penguinmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguinmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\menuopener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\menuopener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\menucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\menucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\buildmenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\buildmenuui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\buildmodeplacer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\buildmodeplacer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Build Mode\\BuildMenuController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\penguin\\penguinanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\penguinanimator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\penguin\\selectable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\selectable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\penguin\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\relic\\Desktop\\comfywinter2026\\assets\\scripts\\build mode\\buildmodeplacer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\build mode\\buildmodeplacer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,19 +71,67 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BuildMenuController.cs",
-              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
-              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAAwI4AAAAFAAAAAAAAAA==",
+              "Title": "SnowBlobStamp2D.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SnowBlobStamp2D.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\SnowBlobStamp2D.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SnowBlobStamp2D.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\SnowBlobStamp2D.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAswFUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-14T17:18:06.065Z",
+              "WhenOpened": "2026-01-16T20:33:09.402Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PenguinMover.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\PenguinMover.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\PenguinMover.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\PenguinMover.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\PenguinMover.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAswKMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T19:59:16.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PenguinManager.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\PenguinManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PenguinManager.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\PenguinManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PenguinManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T19:49:43.434Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SelectionManager.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\SelectionManager.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAswEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T18:31:14.837Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BuildMenuController.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\BuildMenuController.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:18:06.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "BuildMenuController1_old.cs",
               "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuController1_old.cs",
@@ -50,15 +142,99 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "BuildModePlacer.cs",
               "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
               "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
               "RelativeToolTip": "Assets\\Scripts\\Build Mode\\BuildModePlacer.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAcwGgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAYwLUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-14T17:14:47.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MenuOpener.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\MenuOpener.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\MenuOpener.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\MenuOpener.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\MenuOpener.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T17:58:34.579Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MenuController.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\MenuController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\MenuController.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\MenuController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\MenuController.cs",
+              "ViewState": "AgIAAMoAAAAAAAAAAAAswPMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T17:58:11.328Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HouseMenuUI.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\HouseMenuUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\HouseMenuUI.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\HouseMenuUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\HouseMenuUI.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAswKAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T18:19:49.569Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "OpenBuildMenu.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\OpenBuildMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T14:26:02.34Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BuildMenuUI.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Build Mode\\BuildMenuUI.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Build Mode\\BuildMenuUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Build Mode\\BuildMenuUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T17:26:45.947Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Selectable.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\Selectable.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\Selectable.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\Selectable.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\Selectable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T20:46:13.37Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PenguinAnimator.cs",
+              "DocumentMoniker": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\PenguinAnimator.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\PenguinAnimator.cs",
+              "ToolTip": "C:\\Users\\relic\\Desktop\\comfywinter2026\\Assets\\Scripts\\Penguin\\PenguinAnimator.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Penguin\\PenguinAnimator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-16T14:21:20.608Z"
             }
           ]
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PenguinAnimator : MonoBehaviour
 {
-    [Header("References (optional - auto-find if empty)")]
+    [Header("References")]
     public Animator animator;
     public SpriteRenderer sprite;
 
