@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7781724325543743620}
   - component: {fileID: 8785581016695309917}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: StampSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6232462271331857301}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: CarrySocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,8 @@ GameObject:
   - component: {fileID: 5310347144937209662}
   - component: {fileID: 180694866203800584}
   - component: {fileID: 5875312484630908951}
-  m_Layer: 7
+  - component: {fileID: 1670965774657468718}
+  m_Layer: 8
   m_Name: Penguin 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +171,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1730884285
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 04071b064dbd72346af2f2745fdcafc9, type: 3}
@@ -259,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   highlight: {fileID: 0}
+  outlineFx: {fileID: 0}
 --- !u!95 &1018208606007899144
 Animator:
   serializedVersion: 7
@@ -305,6 +307,7 @@ MonoBehaviour:
   iceAddToPileDelay: 0.1
   icePileOffset: {x: 0, y: 1.25}
   collectHold: 0.45
+  pileReuseRadius: 0.35
 --- !u!114 &5310347144937209662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,8 +322,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PenguinMover
   moveSpeed: 2
   defaultWorkOffset: {x: 0, y: 0}
-  fishingOffset: {x: 1, y: 0}
+  fishingOffset: {x: 1, y: 0.5}
   iceOffset: {x: 0, y: 0}
+  detectionRadius: 0.8
+  avoidanceForce: 1.5
+  raycastDistance: 1.2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  unstuckForce: 3
+  ignoreAvoidanceDistance: 0.5
 --- !u!114 &180694866203800584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,3 +359,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PenguinCarryVisual
   carrySocket: {fileID: 6232462271331857301}
+--- !u!114 &1670965774657468718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4218d78ef2d54d0898b7514e121a781f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutlineFx::OutlineFx.OutlineFx
+  _color: {r: 0, g: 0.99020815, b: 1, a: 1}

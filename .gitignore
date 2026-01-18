@@ -54,3 +54,6 @@ crashlytics-build.properties
 # =========================
 # [Aa]ssets/[Aa]ddressable[Aa]ssetsData/*
 # [Aa]ssets/[Ss]treamingAssets/*
+
+# Auto Claude data directory
+.auto-claude/
