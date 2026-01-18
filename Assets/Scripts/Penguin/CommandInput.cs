@@ -33,6 +33,14 @@ public class CommandInput : MonoBehaviour
         var hit = Physics2D.Raycast(world, Vector2.zero);
         if (hit.collider != null)
         {
+            // Check for pebble first
+            var pebble = hit.collider.GetComponentInParent<Pebble>();
+            if (pebble != null && !pebble.IsPickedUp)
+            {
+                unit.AssignPickupPebble(pebble);
+                return;
+            }
+
             var pile = hit.collider.GetComponentInParent<ResourcePile>();
             if (pile != null)
             {

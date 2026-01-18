@@ -11,7 +11,7 @@ public class HouseMenuUI : MonoBehaviour
 
     [Header("Penguin Spawning")]
     [SerializeField] private GameObject penguinPrefab;
-    [SerializeField] private Vector2 entranceOffset = new Vector2(0f, -1f);
+    [SerializeField] private Vector2 spawnOffset = new Vector2(0f, -0.5f);
 
     private VisualElement root;
 
@@ -21,9 +21,10 @@ public class HouseMenuUI : MonoBehaviour
 
     private Button upgradeBtn;
     private Button addPenguinBtn;
-    private Button confirmBtn;
+    private Button buildBtn;
 
-    private GameObject currentHouse;
+    private GameObject currentHouseObject;
+    private House currentHouse;
 
     private enum HouseSelection { None, Upgrade, AddPenguin }
     private HouseSelection currentSelection = HouseSelection.None;
@@ -53,13 +54,18 @@ public class HouseMenuUI : MonoBehaviour
 
     public void SetTargetHouse(GameObject house)
     {
-        currentHouse = house;
+        currentHouseObject = house;
+        currentHouse = house != null ? house.GetComponent<House>() : null;
+
+        if (currentHouse == null && house != null)
+            Debug.LogWarning("HouseMenuUI: Target house has no House component.");
     }
 
     private void Bind()
     {
         if (uiDocument == null)
         {
+            Debug.LogError("HouseMenuUI: Missing UIDocument.");
             enabled = false;
             return;
         }
@@ -73,18 +79,25 @@ public class HouseMenuUI : MonoBehaviour
 
         upgradeBtn = root.Q<Button>("HouseUpgradeBtn");
         addPenguinBtn = root.Q<Button>("AddPenguinBtn");
-        confirmBtn = root.Q<Button>("BuildBtn");
+        buildBtn = root.Q<Button>("BuildBtn");
+
+        if (itemName == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemName'.");
+        if (itemDesc == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemDesc'.");
+        if (itemCost == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemCost'.");
+        if (upgradeBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'HouseUpgradeBtn'.");
+        if (addPenguinBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'AddPenguinBtn'.");
+        if (buildBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'BuildBtn'.");
 
         if (upgradeBtn != null) upgradeBtn.RegisterCallback<ClickEvent>(OnUpgradeClicked);
         if (addPenguinBtn != null) addPenguinBtn.RegisterCallback<ClickEvent>(OnAddPenguinClicked);
-        if (confirmBtn != null) confirmBtn.RegisterCallback<ClickEvent>(OnConfirmClicked);
+        if (buildBtn != null) buildBtn.RegisterCallback<ClickEvent>(OnBuildClicked);
     }
 
     private void Unbind()
     {
         if (upgradeBtn != null) upgradeBtn.UnregisterCallback<ClickEvent>(OnUpgradeClicked);
         if (addPenguinBtn != null) addPenguinBtn.UnregisterCallback<ClickEvent>(OnAddPenguinClicked);
-        if (confirmBtn != null) confirmBtn.UnregisterCallback<ClickEvent>(OnConfirmClicked);
+        if (buildBtn != null) buildBtn.UnregisterCallback<ClickEvent>(OnBuildClicked);
     }
 
     private void ShowDefaultInfo()
@@ -100,62 +113,138 @@ public class HouseMenuUI : MonoBehaviour
     {
         currentSelection = HouseSelection.Upgrade;
 
+        if (currentHouse == null)
+        {
+            if (itemName != null) itemName.text = "Upgrade";
+            if (itemDesc != null) itemDesc.text = "No house selected.";
+            if (itemCost != null) itemCost.text = "";
+            return;
+        }
+
+        if (!currentHouse.CanUpgrade)
+        {
+            if (itemName != null) itemName.text = "Upgrade";
+            if (itemDesc != null) itemDesc.text = "This house is already at max tier!";
+            if (itemCost != null) itemCost.text = "";
+            return;
+        }
+
         if (itemName != null) itemName.text = "Upgrade";
-        if (itemDesc != null) itemDesc.text = "Upgrade this house to improve it.";
-        if (itemCost != null) itemCost.text = "10 Ice, 3 Pebble";
+        if (itemDesc != null) itemDesc.text = currentHouse.GetUpgradeDescription();
+        if (itemCost != null) itemCost.text = $"{currentHouse.UpgradeCost} Ice";
     }
 
     private void OnAddPenguinClicked(ClickEvent evt)
     {
         currentSelection = HouseSelection.AddPenguin;
 
+        if (currentHouse == null)
+        {
+            if (itemName != null) itemName.text = "+1 Penguin";
+            if (itemDesc != null) itemDesc.text = "No house selected.";
+            if (itemCost != null) itemCost.text = "";
+            return;
+        }
+
         if (itemName != null) itemName.text = "+1 Penguin";
-        if (itemDesc != null) itemDesc.text = "Increase capacity by 1 Penguin.";
-        if (itemCost != null) itemCost.text = "5 Ice, 2 Pebble";
+        if (itemDesc != null) itemDesc.text = "Spawn a new penguin at this house.";
+        if (itemCost != null) itemCost.text = $"{currentHouse.penguinFishCost} Fish, {currentHouse.penguinPebbleCost} Pebble";
     }
 
-    private void OnConfirmClicked(ClickEvent evt)
+    private void OnBuildClicked(ClickEvent evt)
     {
         if (currentSelection == HouseSelection.None)
             return;
 
-        switch (currentSelection)
-        {
-            case HouseSelection.Upgrade:
-                break;
-            case HouseSelection.AddPenguin:
-                SpawnPenguin();
-                break;
-        }
+        bool success = false;
 
-        menuController?.Close();
-        ShowDefaultInfo();
+        if (currentSelection == HouseSelection.Upgrade)
+            success = TryUpgradeHouse();
+        else if (currentSelection == HouseSelection.AddPenguin)
+            success = TryAddPenguin();
+
+        if (success)
+        {
+            menuController?.Close();
+            ShowDefaultInfo();
+        }
     }
 
-    private void SpawnPenguin()
+    private bool TryUpgradeHouse()
     {
         if (currentHouse == null)
         {
-            Debug.LogWarning("HouseMenuUI: Cannot spawn penguin, no house selected.");
-            return;
+            Debug.LogWarning("HouseMenuUI: No target house set.");
+            return false;
+        }
+
+        if (!currentHouse.CanUpgrade)
+        {
+            Debug.Log("HouseMenuUI: House is already at max tier.");
+            return false;
+        }
+
+        int cost = currentHouse.UpgradeCost;
+
+        if (GameManager.I == null || GameManager.I.ice < cost)
+        {
+            Debug.Log($"HouseMenuUI: Not enough ice. Need {cost}, have {GameManager.I?.ice ?? 0}");
+            return false;
+        }
+
+        if (currentHouse.TryUpgrade())
+        {
+            Debug.Log($"HouseMenuUI: House upgraded to tier {currentHouse.CurrentTier}!");
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryAddPenguin()
+    {
+        if (currentHouse == null)
+        {
+            Debug.LogWarning("HouseMenuUI: No target house set.");
+            return false;
         }
 
         if (penguinPrefab == null)
         {
-            Debug.LogWarning("HouseMenuUI: Cannot spawn penguin, penguinPrefab not assigned.");
-            return;
+            Debug.LogError("HouseMenuUI: Penguin prefab not assigned!");
+            return false;
         }
 
-        Vector3 spawnPosition = currentHouse.transform.position + (Vector3)entranceOffset;
-        GameObject spawnedPenguin = Instantiate(penguinPrefab, spawnPosition, Quaternion.identity);
+        int fishCost = currentHouse.penguinFishCost;
+        int pebbleCost = currentHouse.penguinPebbleCost;
+
+        if (GameManager.I == null)
+        {
+            Debug.LogWarning("HouseMenuUI: GameManager not found.");
+            return false;
+        }
+
+        if (GameManager.I.food < fishCost || GameManager.I.pebbles < pebbleCost)
+        {
+            Debug.Log($"HouseMenuUI: Not enough resources. Need {fishCost} fish and {pebbleCost} pebbles. Have {GameManager.I.food} fish and {GameManager.I.pebbles} pebbles.");
+            return false;
+        }
+
+        GameManager.I.food -= fishCost;
+        GameManager.I.pebbles -= pebbleCost;
+
+        // Spawn 1 unit lower on Y (additional offset beyond spawnOffset)
+        Vector3 spawnPos = currentHouseObject.transform.position + (Vector3)spawnOffset + new Vector3(0f, -1f, 0f);
+        GameObject newPenguin = Instantiate(penguinPrefab, spawnPos, Quaternion.identity);
 
         if (PenguinManager.I != null)
         {
-            PenguinJobs jobs = spawnedPenguin.GetComponent<PenguinJobs>();
+            var jobs = newPenguin.GetComponent<PenguinJobs>();
             if (jobs != null)
-            {
                 PenguinManager.I.InitializePenguin(jobs);
-            }
         }
+
+        Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}!");
+        return true;
     }
 }

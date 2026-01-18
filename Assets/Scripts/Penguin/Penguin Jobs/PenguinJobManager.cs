@@ -17,6 +17,7 @@ public class PenguinJobs : MonoBehaviour
         CuttingIce,
 
         MovingToPile,
+        MovingToPebble,
         CollectingFromPile,
         ReturningToDropoff
     }
@@ -86,6 +87,7 @@ public class PenguinJobs : MonoBehaviour
             state == JobState.CuttingIce ||
             state == JobState.MovingToIceSpot ||
             state == JobState.MovingToPile ||
+            state == JobState.MovingToPebble ||
             state == JobState.CollectingFromPile ||
             state == JobState.ReturningToDropoff)
         {
@@ -149,6 +151,19 @@ public class PenguinJobs : MonoBehaviour
         state = JobState.MovingToPile;
 
         haulJob.Begin(pile);
+    }
+
+    public void AssignPickupPebble(Pebble pebble)
+    {
+        if (!CanAcceptOrders) return;
+        if (pebble == null || pebble.IsPickedUp) return;
+
+        CancelWork();
+
+        lookAtPos = pebble.transform.position;
+        state = JobState.MovingToPebble;
+
+        haulJob.BeginPebble(pebble);
     }
 
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1366114754025920912}
   - component: {fileID: 7828697538787759628}
   - component: {fileID: 6086207949262319845}
+  - component: {fileID: 7232757310928626941}
   m_Layer: 0
   m_Name: HouseMenuUI
   m_TagString: Untagged
@@ -68,6 +69,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb5e66f278d71643b2be69db2fbd6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildMenuController
+  menuId: Build
   menuRootName: MenuRoot
   slideDuration: 0.5
   hiddenMarginTop: -420
+--- !u!114 &7232757310928626941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8479353846174907116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c83d5b6d49d12a46a540af37f9266ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HouseMenuUI
+  uiDocument: {fileID: 7828697538787759628}
+  menuController: {fileID: 6086207949262319845}
+  penguinPrefab: {fileID: 6246836616639282338, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+  spawnOffset: {x: 0, y: -1.5}

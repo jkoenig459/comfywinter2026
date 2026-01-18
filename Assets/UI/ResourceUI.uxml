@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="ResourcePanel" style="position: absolute; top: 50px; left: 10px; flex-direction: row; padding: 8px 12px; background-color: rgba(0, 0, 0, 0.7); border-radius: 6px; align-items: center;">
+        
+        <ui:VisualElement name="IceContainer" style="flex-direction: row; align-items: center; margin-right: 16px;">
+            <ui:Label text="❄" style="font-size: 16px; margin-right: 4px; color: rgb(135, 206, 250);"/>
+            <ui:Label text="0" name="IceCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+        </ui:VisualElement>
+        
+        <ui:VisualElement name="FoodContainer" style="flex-direction: row; align-items: center; margin-right: 16px;">
+            <ui:Label text="🐟" style="font-size: 16px; margin-right: 4px;"/>
+            <ui:Label text="0" name="FoodCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+        </ui:VisualElement>
+        
+        <ui:VisualElement name="PebblesContainer" style="flex-direction: row; align-items: center;">
+            <ui:Label text="●" style="font-size: 14px; margin-right: 4px; color: rgb(160, 160, 160);"/>
+            <ui:Label text="0" name="PebblesCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+        </ui:VisualElement>
+        
+    </ui:VisualElement>
+</ui:UXML>

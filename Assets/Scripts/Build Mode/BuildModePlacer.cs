@@ -28,6 +28,8 @@ public class BuildModePlacer : MonoBehaviour
     private GameObject ghost;
     private BoxCollider2D ghostCollider;
 
+    public bool IsPlacing => ghost != null;
+
     private void Awake()
     {
         I = this;
@@ -38,7 +40,6 @@ public class BuildModePlacer : MonoBehaviour
     {
         if (ghost == null) return;
 
-        // Right click or escape to cancel
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
         {
             Cancel();
@@ -73,7 +74,6 @@ public class BuildModePlacer : MonoBehaviour
         ghost = Instantiate(selectedGhostPrefab);
         ghost.name = "BuildGhost";
 
-        // Force ghost to render above everything else
         ForceGhostRenderOnTop(ghost);
 
         ghostCollider = ghost.GetComponent<BoxCollider2D>();
@@ -102,7 +102,6 @@ public class BuildModePlacer : MonoBehaviour
 
         ghost = null;
         ghostCollider = null;
-
     }
 
     private void UpdateGhostPosition()
@@ -157,7 +156,6 @@ public class BuildModePlacer : MonoBehaviour
     {
         if (ghost == null) return;
 
-        // Support prefabs with multiple SpriteRenderers
         var srs = ghost.GetComponentsInChildren<SpriteRenderer>(true);
         if (srs == null || srs.Length == 0) return;
 
@@ -175,6 +173,9 @@ public class BuildModePlacer : MonoBehaviour
 
         Instantiate(selectedPrefab, ghost.transform.position, Quaternion.identity);
         GameManager.I.ice -= selectedCost;
+
+        if (AudioManager.I != null)
+            AudioManager.I.PlayPlaceIgloo();
 
         Cancel();
     }

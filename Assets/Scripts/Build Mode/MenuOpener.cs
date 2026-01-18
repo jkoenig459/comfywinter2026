@@ -10,6 +10,10 @@ public class MenuOpener : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
+        // Block clicks while in build placement mode
+        if (BuildModePlacer.I != null && BuildModePlacer.I.IsPlacing)
+            return;
+
         if (MenuController.IsPointerOverAnyOpenMenuUI(Input.mousePosition))
             return;
 

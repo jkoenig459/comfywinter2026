@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ResourceType { Ice, Food }
+public enum ResourceType { Ice, Food, Pebble }
 
 public class ResourceNode : MonoBehaviour
 {
