@@ -246,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: orthographic size
-      value: 9.28125
+      value: 5.625
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1018,6 +1018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildMenuUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4469757737789462717, guid: 0e2ee5f879e51c542aa9292ff8dafceb, type: 3}
+      propertyPath: hiddenMarginTop
+      value: -1000
+      objectReference: {fileID: 0}
     - target: {fileID: 8446080170988133386, guid: 0e2ee5f879e51c542aa9292ff8dafceb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.3913
@@ -1422,6 +1426,10 @@ PrefabInstance:
     - target: {fileID: 6086207949262319845, guid: 4aa72a4f5c26f77458ac46e85d869ddd, type: 3}
       propertyPath: menuId
       value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086207949262319845, guid: 4aa72a4f5c26f77458ac46e85d869ddd, type: 3}
+      propertyPath: hiddenMarginTop
+      value: -1000
       objectReference: {fileID: 0}
     - target: {fileID: 8479353846174907116, guid: 4aa72a4f5c26f77458ac46e85d869ddd, type: 3}
       propertyPath: m_Name
