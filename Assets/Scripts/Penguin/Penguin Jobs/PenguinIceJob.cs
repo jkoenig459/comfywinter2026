@@ -4,9 +4,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class PenguinIceJob : MonoBehaviour
 {
+    [Header("Sound Timing")]
+    [Tooltip("Delay before playing the ice breaking sound after arriving at spot.")]
+    public float iceBreakingSoundDelay = 0f;
+
     private PenguinJobs jobs;
     private PenguinMover mover;
     private PenguinAnimator anim;
+    private PenguinAudio penguinAudio;
 
     private Transform node;
     private ResourcePile pile;
@@ -17,6 +22,7 @@ public class PenguinIceJob : MonoBehaviour
         this.jobs = jobs;
         this.mover = mover;
         this.anim = anim;
+        this.penguinAudio = GetComponent<PenguinAudio>();
     }
 
     public void Begin(Transform nodeTransform)
@@ -51,7 +57,19 @@ public class PenguinIceJob : MonoBehaviour
                 continue;
             }
 
-            yield return new WaitForSeconds(jobs.iceInterval);
+            // Play ice breaking sound at start of cycle with optional delay
+            if (iceBreakingSoundDelay > 0f)
+                yield return new WaitForSeconds(iceBreakingSoundDelay);
+
+            if (!jobs.IsCuttingState) yield break;
+
+            if (penguinAudio != null)
+                penguinAudio.PlayIceBreakingSound();
+
+            float remainingWait = Mathf.Max(0f, jobs.iceInterval - iceBreakingSoundDelay);
+            if (remainingWait > 0f)
+                yield return new WaitForSeconds(remainingWait);
+
             if (!jobs.IsCuttingState) yield break;
 
             anim.TriggerFinishCut();
@@ -69,7 +87,12 @@ public class PenguinIceJob : MonoBehaviour
             if (!jobs.IsCuttingState) yield break;
 
             if (pile != null)
+            {
                 pile.Add(1);
+
+                if (AudioManager.I != null)
+                    AudioManager.I.PlayPileIce();
+            }
         }
     }
 

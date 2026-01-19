@@ -4,9 +4,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class PenguinFishJob : MonoBehaviour
 {
+    [Header("Sound Timing")]
+    [Tooltip("Delay before playing the fishing sound after arriving at spot.")]
+    public float fishingSoundDelay = 0f;
+
     private PenguinJobs jobs;
     private PenguinMover mover;
     private PenguinAnimator anim;
+    private PenguinAudio penguinAudio;
 
     private Transform node;
     private ResourcePile pile;
@@ -17,6 +22,7 @@ public class PenguinFishJob : MonoBehaviour
         this.jobs = jobs;
         this.mover = mover;
         this.anim = anim;
+        this.penguinAudio = GetComponent<PenguinAudio>();
     }
 
     public void Begin(Transform nodeTransform)
@@ -51,7 +57,19 @@ public class PenguinFishJob : MonoBehaviour
                 continue;
             }
 
-            yield return new WaitForSeconds(jobs.fishInterval);
+            // Play cast sound at start of cycle with optional delay
+            if (fishingSoundDelay > 0f)
+                yield return new WaitForSeconds(fishingSoundDelay);
+
+            if (!jobs.IsFishingState) yield break;
+
+            if (penguinAudio != null)
+                penguinAudio.PlayFishingSound();
+
+            float remainingWait = Mathf.Max(0f, jobs.fishInterval - fishingSoundDelay);
+            if (remainingWait > 0f)
+                yield return new WaitForSeconds(remainingWait);
+
             if (!jobs.IsFishingState) yield break;
 
             anim.TriggerCatchFish();
@@ -67,7 +85,12 @@ public class PenguinFishJob : MonoBehaviour
             if (!jobs.IsFishingState) yield break;
 
             if (pile != null)
+            {
                 pile.Add(1);
+
+                if (AudioManager.I != null)
+                    AudioManager.I.PlayPileFish();
+            }
         }
     }
 

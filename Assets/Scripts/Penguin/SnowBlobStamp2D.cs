@@ -6,20 +6,14 @@ public class SnowBlobStamps2D : MonoBehaviour
     [SerializeField] private ParticleSystem stampsPS;
 
     [Header("Stamping")]
-    [Tooltip("Distance traveled between stamps. Smaller = smoother line, more particles.")]
     [SerializeField] private float spacing = 0.08f;
-
-    [Tooltip("Ignore tiny jitter when idle.")]
     [SerializeField] private float minSpeed = 0.02f;
 
     [Header("Look")]
     [SerializeField] private float lifetime = 6f;
     [SerializeField] private float size = 0.22f;
-
     [Range(0f, 1f)]
     [SerializeField] private float alpha = 0.65f;
-
-    [Tooltip("Small random scatter so it doesn't look like perfect beads.")]
     [SerializeField] private float jitter = 0.01f;
 
     private Vector3 lastPos;
@@ -29,7 +23,26 @@ public class SnowBlobStamps2D : MonoBehaviour
     {
         if (!stampsPS)
         {
-            Debug.LogError("SnowBlobStamps2D: stampsPS not assigned.", this);
+            stampsPS = GetComponent<ParticleSystem>();
+        }
+
+        if (!stampsPS)
+        {
+            GameObject snowStampObj = GameObject.Find("SnowStampPS");
+            if (snowStampObj != null)
+            {
+                stampsPS = snowStampObj.GetComponent<ParticleSystem>();
+            }
+        }
+
+        if (!stampsPS)
+        {
+            stampsPS = GetComponentInChildren<ParticleSystem>();
+        }
+
+        if (!stampsPS)
+        {
+            Debug.LogError("SnowBlobStamps2D: stampsPS not assigned and could not find ParticleSystem.", this);
             enabled = false;
             return;
         }

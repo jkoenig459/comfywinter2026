@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/BuildMenuSS.uss?fileID=7433441132597879392&amp;guid=6fe9803644d3fcb4388684c2c68a9fd4&amp;type=3#BuildMenuSS"/>
+    <ui:VisualElement name="MenuRoot" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="LeftCol" class="leftCol" style="flex-grow: 1; align-items: center; justify-content: center; width: 10%;">
+            <ui:Button text="Upgrade&#10;" name="HouseUpgradeBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
+            <ui:Button text="+1 Penguin" name="AddPenguinBtn" style="flex-basis: auto; width: 100px; height: 40px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="RightCol" class="rightCol" style="flex-grow: 1; justify-content: space-between; align-items: flex-start;">
+            <ui:VisualElement name="RightTop" class="rightTop" style="flex-grow: 1; align-items: stretch;">
+                <ui:Label text="Item Name" name="ItemName" style="position: absolute; white-space: pre-wrap; text-overflow: clip; flex-wrap: wrap; width: 144px; top: auto; left: auto; align-items: stretch;"/>
+                <ui:Label text="Item Desciption&#10;&#10;" name="ItemDesc" style="position: absolute; white-space: pre-wrap; text-overflow: clip; flex-wrap: wrap; width: 191px; top: 35px; left: auto;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="RightBottom" class="rightBottom" style="flex-grow: 1;">
+                <ui:Label text="Item Cost&#10;" name="ItemCost" style="position: absolute; white-space: pre-wrap; text-overflow: clip; flex-wrap: wrap; width: 144px; top: 50px; left: auto;"/>
+                <ui:Button text="Confirm" name="BuildBtn" style="flex-shrink: 0; width: 75px; height: 10px; right: auto; left: auto; top: 100px; flex-grow: 0; align-items: auto; align-self: auto; align-content: auto; bottom: auto;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
