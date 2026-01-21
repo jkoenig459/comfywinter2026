@@ -123,7 +123,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -160,3 +160,4 @@ MonoBehaviour:
   - {fileID: 6866566373990017379, guid: 4c68452a579854c4a971b9688dac98e3, type: 3}
   maxCount: 4
   count: 0
+  outputPile: {fileID: 0}
