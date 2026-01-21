@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PenguinMover : MonoBehaviour
@@ -10,32 +11,137 @@ public class PenguinMover : MonoBehaviour
     public Vector2 fishingOffset = new Vector2(0.35f, -0.12f);
     public Vector2 iceOffset = new Vector2(0.30f, -0.05f);
 
-    [Header("Obstacle Avoidance")]
-    [SerializeField] private float detectionRadius = 1.5f;
-    [SerializeField] private float avoidanceForce = 3.5f;
-    [SerializeField] private float raycastDistance = 2f;
-    [SerializeField] private LayerMask obstacleLayer;
-    [SerializeField] private float unstuckForce = 4f;
-    [SerializeField] private float minDistanceToObstacle = 0.5f;
-    [SerializeField] private float stuckTimeThreshold = 0.3f;
-    [SerializeField] private float clearanceTime = 0.5f;
-    [SerializeField] private int raycastAngles = 5;
-
-    private Vector2 lastPosition;
-    private float stuckTimer = 0f;
-    private Vector2 stuckEscapeDirection;
-    private int avoidanceAttempts = 0;
-    private Vector2 navigationDirection = Vector2.zero; // Locked navigation direction
-    private float clearanceTimer = 0f;
-    private Collider2D currentObstacle = null;
-    private bool isNavigatingAround = false;
+    [Header("Pathfinding Settings")]
+    [Tooltip("Only objects on this layer will be pathed around (e.g., Buildings)")]
+    [SerializeField] private LayerMask buildingsLayer;
+    [SerializeField] private float gridCellSize = 0.4f;
+    [SerializeField] private float penguinRadius = 0.25f;
+    [SerializeField] private float pathRecalculateInterval = 0.3f;
+    [SerializeField] private float gridPadding = 8f;
+    [SerializeField] private int maxIterations = 2000;
 
     private Rigidbody2D rb;
     private Vector2 moveTarget;
     private bool hasTarget;
     private System.Action onArrive;
+    private List<Vector2> currentPath = new List<Vector2>();
+    private int currentWaypointIndex;
+    private float pathRecalculateTimer;
 
     public Vector2 Velocity { get; private set; }
+
+    #region A* Pathfinding
+
+    private class PathNode
+    {
+        public int x, y;
+        public bool walkable;
+        public float gCost;
+        public float hCost;
+        public float fCost => gCost + hCost;
+        public PathNode parent;
+        public Vector2 worldPosition;
+
+        public PathNode(int x, int y, bool walkable, Vector2 worldPos)
+        {
+            this.x = x;
+            this.y = y;
+            this.walkable = walkable;
+            this.worldPosition = worldPos;
+            this.gCost = float.MaxValue;
+            this.hCost = 0;
+            this.parent = null;
+        }
+    }
+
+    private class MinHeap
+    {
+        private List<PathNode> nodes = new List<PathNode>();
+        private Dictionary<PathNode, int> nodeIndices = new Dictionary<PathNode, int>();
+
+        public int Count => nodes.Count;
+
+        public void Add(PathNode node)
+        {
+            nodes.Add(node);
+            nodeIndices[node] = nodes.Count - 1;
+            BubbleUp(nodes.Count - 1);
+        }
+
+        public PathNode RemoveMin()
+        {
+            if (nodes.Count == 0) return null;
+
+            PathNode min = nodes[0];
+            nodeIndices.Remove(min);
+
+            if (nodes.Count > 1)
+            {
+                nodes[0] = nodes[nodes.Count - 1];
+                nodeIndices[nodes[0]] = 0;
+                nodes.RemoveAt(nodes.Count - 1);
+                BubbleDown(0);
+            }
+            else
+            {
+                nodes.RemoveAt(0);
+            }
+
+            return min;
+        }
+
+        public bool Contains(PathNode node) => nodeIndices.ContainsKey(node);
+
+        public void UpdatePriority(PathNode node)
+        {
+            if (nodeIndices.TryGetValue(node, out int index))
+            {
+                BubbleUp(index);
+                BubbleDown(index);
+            }
+        }
+
+        private void BubbleUp(int index)
+        {
+            while (index > 0)
+            {
+                int parent = (index - 1) / 2;
+                if (nodes[index].fCost >= nodes[parent].fCost) break;
+                Swap(index, parent);
+                index = parent;
+            }
+        }
+
+        private void BubbleDown(int index)
+        {
+            while (true)
+            {
+                int left = 2 * index + 1;
+                int right = 2 * index + 2;
+                int smallest = index;
+
+                if (left < nodes.Count && nodes[left].fCost < nodes[smallest].fCost)
+                    smallest = left;
+                if (right < nodes.Count && nodes[right].fCost < nodes[smallest].fCost)
+                    smallest = right;
+
+                if (smallest == index) break;
+                Swap(index, smallest);
+                index = smallest;
+            }
+        }
+
+        private void Swap(int a, int b)
+        {
+            PathNode temp = nodes[a];
+            nodes[a] = nodes[b];
+            nodes[b] = temp;
+            nodeIndices[nodes[a]] = a;
+            nodeIndices[nodes[b]] = b;
+        }
+    }
+
+    #endregion
 
     private void Awake()
     {
@@ -55,300 +161,377 @@ public class PenguinMover : MonoBehaviour
 
         Vector2 pos = rb.position;
         float distanceToTarget = (moveTarget - pos).magnitude;
-        Vector2 directionToTarget = (moveTarget - pos).normalized;
 
-        // Check if penguin is stuck
-        float movementThisFrame = (pos - lastPosition).magnitude;
-        if (movementThisFrame < 0.01f)
-        {
-            stuckTimer += Time.fixedDeltaTime;
-            if (stuckTimer >= stuckTimeThreshold)
-            {
-                avoidanceAttempts++;
-            }
-        }
-        else
-        {
-            if (movementThisFrame > 0.05f) // Good movement, reset
-            {
-                stuckTimer = 0f;
-                avoidanceAttempts = 0;
-            }
-        }
-        lastPosition = pos;
-
-        // Check if there's an obstacle directly between us and the target
-        RaycastHit2D targetRaycast = Physics2D.Raycast(pos, directionToTarget, distanceToTarget, obstacleLayer);
-        bool obstacleBlockingTarget = targetRaycast.collider != null && targetRaycast.collider.transform != transform;
-
-        // Calculate avoidance
-        Vector2 avoidance = CalculateAvoidance(pos, directionToTarget, distanceToTarget, obstacleBlockingTarget);
-
-        Vector2 desiredDirection;
-
-        // If already navigating around, use ONLY the navigation direction (highest priority)
-        if (isNavigatingAround && avoidance.sqrMagnitude > 0.01f)
-        {
-            // Pure avoidance direction, no blending
-            desiredDirection = avoidance.normalized;
-        }
-        // If obstacle is blocking the direct path, use avoidance but blend slightly with target
-        else if (obstacleBlockingTarget && avoidance.sqrMagnitude > 0.01f)
-        {
-            // Mostly avoidance, but tiny bit toward target to maintain progress
-            desiredDirection = (avoidance.normalized * 4f + directionToTarget).normalized;
-        }
-        else
-        {
-            // Otherwise blend target direction with avoidance
-            desiredDirection = (directionToTarget + avoidance).normalized;
-        }
-
-        Vector2 next = pos + desiredDirection * moveSpeed * Time.fixedDeltaTime;
-        Velocity = (next - pos) / Time.fixedDeltaTime;
-
-        rb.MovePosition(next);
-
+        // Check if we've arrived (same threshold as original: 0.01 sqrMagnitude = 0.1 distance)
         if ((pos - moveTarget).sqrMagnitude <= 0.01f)
         {
             hasTarget = false;
-            stuckTimer = 0f;
-            avoidanceAttempts = 0;
-            navigationDirection = Vector2.zero;
-            clearanceTimer = 0f;
-            currentObstacle = null;
-            isNavigatingAround = false;
             Velocity = Vector2.zero;
             rb.linearVelocity = Vector2.zero;
+            currentPath.Clear();
 
             var cb = onArrive;
             onArrive = null;
             cb?.Invoke();
+            return;
         }
+
+        // Periodically recalculate path to handle dynamic buildings
+        pathRecalculateTimer -= Time.fixedDeltaTime;
+        bool pathBlocked = IsCurrentPathBlockedByBuilding();
+
+        if (pathRecalculateTimer <= 0f || pathBlocked)
+        {
+            pathRecalculateTimer = pathRecalculateInterval;
+            RecalculatePath();
+        }
+
+        // Follow the path
+        FollowPath();
     }
 
-    private Vector2 CalculateAvoidance(Vector2 pos, Vector2 moveDirection, float distanceToTarget, bool obstacleBlockingTarget)
+    private bool IsCurrentPathBlockedByBuilding()
     {
-        Vector2 avoidanceVector = Vector2.zero;
+        if (currentPath == null || currentPath.Count == 0 || currentWaypointIndex >= currentPath.Count)
+            return false;
 
-        Collider2D[] obstacles = Physics2D.OverlapCircleAll(pos, detectionRadius, obstacleLayer);
+        Vector2 nextWaypoint = currentPath[currentWaypointIndex];
+        return !HasClearPathFromBuildings(rb.position, nextWaypoint);
+    }
 
-        bool hasObstaclesNearby = false;
-        bool isStuck = false;
-        Vector2 escapeDirection = Vector2.zero;
-        Collider2D nearestObstacle = null;
-        float nearestDistance = float.MaxValue;
+    private bool HasClearPathFromBuildings(Vector2 from, Vector2 to)
+    {
+        Vector2 direction = to - from;
+        float distance = direction.magnitude;
 
-        // Check for obstacles in detection radius
-        foreach (Collider2D obstacle in obstacles)
+        if (distance < 0.01f) return true;
+
+        // Only check against buildings layer
+        RaycastHit2D hit = Physics2D.CircleCast(from, penguinRadius * 0.8f, direction.normalized, distance, buildingsLayer);
+        return hit.collider == null;
+    }
+
+    private void FollowPath()
+    {
+        Vector2 pos = rb.position;
+        Vector2 directionToTarget = (moveTarget - pos).normalized;
+
+        // If no path or path completed, move directly to target
+        if (currentPath == null || currentPath.Count == 0 || currentWaypointIndex >= currentPath.Count)
         {
-            if (obstacle.transform == transform) continue;
+            Vector2 nextPos = pos + directionToTarget * moveSpeed * Time.fixedDeltaTime;
+            Velocity = (nextPos - pos) / Time.fixedDeltaTime;
+            transform.position = new Vector3(nextPos.x, nextPos.y, transform.position.z);
+            return;
+        }
 
-            hasObstaclesNearby = true;
-            Vector2 obstaclePos = obstacle.ClosestPoint(pos);
-            Vector2 directionFromObstacle = pos - obstaclePos;
-            float distance = directionFromObstacle.magnitude;
-
-            if (distance < nearestDistance)
+        // Try to skip waypoints via line-of-sight to buildings only
+        for (int i = currentPath.Count - 1; i > currentWaypointIndex; i--)
+        {
+            if (HasClearPathFromBuildings(pos, currentPath[i]))
             {
-                nearestDistance = distance;
-                nearestObstacle = obstacle;
+                currentWaypointIndex = i;
+                break;
+            }
+        }
+
+        // Also check if we can go directly to target
+        if (HasClearPathFromBuildings(pos, moveTarget))
+        {
+            currentPath.Clear();
+            Vector2 nextPos = pos + directionToTarget * moveSpeed * Time.fixedDeltaTime;
+            Velocity = (nextPos - pos) / Time.fixedDeltaTime;
+            transform.position = new Vector3(nextPos.x, nextPos.y, transform.position.z);
+            return;
+        }
+
+        if (currentWaypointIndex >= currentPath.Count)
+        {
+            Vector2 nextPos = pos + directionToTarget * moveSpeed * Time.fixedDeltaTime;
+            Velocity = (nextPos - pos) / Time.fixedDeltaTime;
+            transform.position = new Vector3(nextPos.x, nextPos.y, transform.position.z);
+            return;
+        }
+
+        Vector2 currentWaypoint = currentPath[currentWaypointIndex];
+        float distanceToWaypoint = Vector2.Distance(pos, currentWaypoint);
+
+        // Move to next waypoint if close enough
+        if (distanceToWaypoint <= 0.2f)
+        {
+            currentWaypointIndex++;
+            if (currentWaypointIndex >= currentPath.Count)
+            {
+                Vector2 nextPos = pos + directionToTarget * moveSpeed * Time.fixedDeltaTime;
+                Velocity = (nextPos - pos) / Time.fixedDeltaTime;
+                transform.position = new Vector3(nextPos.x, nextPos.y, transform.position.z);
+                return;
+            }
+            currentWaypoint = currentPath[currentWaypointIndex];
+        }
+
+        // Move toward current waypoint
+        Vector2 direction = (currentWaypoint - pos).normalized;
+        Vector2 next = pos + direction * moveSpeed * Time.fixedDeltaTime;
+        Velocity = (next - pos) / Time.fixedDeltaTime;
+        transform.position = new Vector3(next.x, next.y, transform.position.z);
+    }
+
+    private void RecalculatePath()
+    {
+        // Check if there's a building between us and the target
+        if (HasClearPathFromBuildings(rb.position, moveTarget))
+        {
+            // No buildings in the way, just go directly
+            currentPath.Clear();
+            currentWaypointIndex = 0;
+            return;
+        }
+
+        // Need to path around buildings
+        currentPath = FindPath(rb.position, moveTarget);
+        currentWaypointIndex = 0;
+    }
+
+    private List<Vector2> FindPath(Vector2 startPos, Vector2 endPos)
+    {
+        // Calculate grid bounds
+        float minX = Mathf.Min(startPos.x, endPos.x) - gridPadding;
+        float maxX = Mathf.Max(startPos.x, endPos.x) + gridPadding;
+        float minY = Mathf.Min(startPos.y, endPos.y) - gridPadding;
+        float maxY = Mathf.Max(startPos.y, endPos.y) + gridPadding;
+
+        Vector2 gridOrigin = new Vector2(minX, minY);
+        int gridWidth = Mathf.CeilToInt((maxX - minX) / gridCellSize) + 1;
+        int gridHeight = Mathf.CeilToInt((maxY - minY) / gridCellSize) + 1;
+
+        gridWidth = Mathf.Min(gridWidth, 150);
+        gridHeight = Mathf.Min(gridHeight, 150);
+
+        // Create grid - only check buildings layer
+        PathNode[,] grid = new PathNode[gridWidth, gridHeight];
+        float checkRadius = penguinRadius + gridCellSize * 0.25f;
+
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                Vector2 worldPos = gridOrigin + new Vector2(x * gridCellSize, y * gridCellSize);
+                bool walkable = !Physics2D.OverlapCircle(worldPos, checkRadius, buildingsLayer);
+                grid[x, y] = new PathNode(x, y, walkable, worldPos);
+            }
+        }
+
+        PathNode startNode = GetNodeFromWorld(grid, startPos, gridOrigin, gridWidth, gridHeight);
+        PathNode endNode = GetNodeFromWorld(grid, endPos, gridOrigin, gridWidth, gridHeight);
+
+        if (startNode == null || endNode == null)
+            return new List<Vector2>();
+
+        // Start and end must be walkable
+        startNode.walkable = true;
+        endNode.walkable = true;
+
+        // Run A*
+        List<Vector2> path = AStar(grid, startNode, endNode, gridWidth, gridHeight);
+
+        if (path.Count > 0)
+        {
+            path = SmoothPath(path);
+        }
+
+        return path;
+    }
+
+    private PathNode GetNodeFromWorld(PathNode[,] grid, Vector2 worldPos, Vector2 origin, int width, int height)
+    {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / gridCellSize);
+        int y = Mathf.RoundToInt((worldPos.y - origin.y) / gridCellSize);
+
+        x = Mathf.Clamp(x, 0, width - 1);
+        y = Mathf.Clamp(y, 0, height - 1);
+
+        return grid[x, y];
+    }
+
+    private List<Vector2> AStar(PathNode[,] grid, PathNode startNode, PathNode endNode, int gridWidth, int gridHeight)
+    {
+        MinHeap openSet = new MinHeap();
+        HashSet<PathNode> closedSet = new HashSet<PathNode>();
+
+        startNode.gCost = 0;
+        startNode.hCost = Heuristic(startNode, endNode);
+        openSet.Add(startNode);
+
+        int iterations = 0;
+
+        int[] dx = { 0, 1, 1, 1, 0, -1, -1, -1 };
+        int[] dy = { 1, 1, 0, -1, -1, -1, 0, 1 };
+        float[] costs = { 1f, 1.414f, 1f, 1.414f, 1f, 1.414f, 1f, 1.414f };
+
+        while (openSet.Count > 0 && iterations < maxIterations)
+        {
+            iterations++;
+            PathNode current = openSet.RemoveMin();
+
+            if (current == endNode)
+            {
+                return RetracePath(startNode, endNode);
             }
 
-            // Very close or overlapping - definitely stuck
-            if (distance < minDistanceToObstacle * 0.5f)
-            {
-                isStuck = true;
-                Vector2 toObstacle = (obstaclePos - pos).normalized;
-                Vector2 perpendicular = Vector2.Perpendicular(toObstacle);
+            closedSet.Add(current);
 
-                // Use navigation direction if we have one
-                if (navigationDirection.sqrMagnitude > 0.01f)
+            for (int i = 0; i < 8; i++)
+            {
+                int nx = current.x + dx[i];
+                int ny = current.y + dy[i];
+
+                if (nx < 0 || nx >= gridWidth || ny < 0 || ny >= gridHeight)
+                    continue;
+
+                PathNode neighbor = grid[nx, ny];
+
+                if (!neighbor.walkable || closedSet.Contains(neighbor))
+                    continue;
+
+                // Prevent corner cutting
+                if (i % 2 == 1)
                 {
-                    escapeDirection += navigationDirection;
+                    bool cardinalX = grid[current.x + dx[i], current.y].walkable;
+                    bool cardinalY = grid[current.x, current.y + dy[i]].walkable;
+                    if (!cardinalX || !cardinalY)
+                        continue;
                 }
-                else
+
+                float newGCost = current.gCost + costs[i] * gridCellSize;
+
+                if (newGCost < neighbor.gCost)
                 {
-                    // Choose the perpendicular direction closer to target
-                    Vector2 toTarget = (moveTarget - pos).normalized;
-                    if (Vector2.Dot(perpendicular, toTarget) < 0)
+                    neighbor.gCost = newGCost;
+                    neighbor.hCost = Heuristic(neighbor, endNode);
+                    neighbor.parent = current;
+
+                    if (!openSet.Contains(neighbor))
                     {
-                        perpendicular = -perpendicular;
+                        openSet.Add(neighbor);
                     }
-                    escapeDirection += perpendicular;
+                    else
+                    {
+                        openSet.UpdatePriority(neighbor);
+                    }
                 }
+            }
+        }
 
-                // If stuck for too long, add backwards force
-                if (avoidanceAttempts > 3)
+        return new List<Vector2>();
+    }
+
+    private float Heuristic(PathNode a, PathNode b)
+    {
+        float dx = Mathf.Abs(a.worldPosition.x - b.worldPosition.x);
+        float dy = Mathf.Abs(a.worldPosition.y - b.worldPosition.y);
+        return Mathf.Max(dx, dy) + (1.414f - 1f) * Mathf.Min(dx, dy);
+    }
+
+    private List<Vector2> RetracePath(PathNode startNode, PathNode endNode)
+    {
+        List<Vector2> path = new List<Vector2>();
+        PathNode current = endNode;
+
+        while (current != startNode && current != null)
+        {
+            path.Add(current.worldPosition);
+            current = current.parent;
+        }
+
+        path.Reverse();
+        return path;
+    }
+
+    private List<Vector2> SmoothPath(List<Vector2> path)
+    {
+        if (path.Count <= 2)
+            return path;
+
+        List<Vector2> smoothed = new List<Vector2>();
+        int currentIndex = 0;
+
+        // Find first visible point from start
+        for (int i = path.Count - 1; i >= 0; i--)
+        {
+            if (HasClearPathFromBuildings(rb.position, path[i]))
+            {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        smoothed.Add(path[currentIndex]);
+
+        while (currentIndex < path.Count - 1)
+        {
+            Vector2 from = path[currentIndex];
+            int furthestVisible = currentIndex + 1;
+
+            for (int i = path.Count - 1; i > currentIndex + 1; i--)
+            {
+                if (HasClearPathFromBuildings(from, path[i]))
                 {
-                    escapeDirection += -toObstacle * 0.5f;
+                    furthestVisible = i;
+                    break;
                 }
             }
-            // Close enough to trigger strong avoidance (but only if not already navigating)
-            else if (distance < minDistanceToObstacle && !isNavigatingAround)
-            {
-                float urgency = 1f - (distance / minDistanceToObstacle);
-                avoidanceVector += directionFromObstacle.normalized * urgency * avoidanceForce * 3f;
-            }
-            // Normal avoidance (but only if not already navigating)
-            else if (distance < detectionRadius && !isNavigatingAround)
-            {
-                float weight = 1f - (distance / detectionRadius);
-                avoidanceVector += directionFromObstacle.normalized * weight * avoidanceForce;
-            }
+
+            smoothed.Add(path[furthestVisible]);
+            currentIndex = furthestVisible;
         }
 
-        // Update clearance timer based on obstacles
-        if (hasObstaclesNearby)
-        {
-            clearanceTimer = 0f; // Reset clearance timer while obstacles present
-        }
-        else
-        {
-            clearanceTimer += Time.fixedDeltaTime;
-            if (clearanceTimer >= clearanceTime)
-            {
-                // Clear navigation state after being clear for the full duration
-                navigationDirection = Vector2.zero;
-                currentObstacle = null;
-                isNavigatingAround = false;
-            }
-        }
-
-        // If stuck, return strong escape direction
-        if (isStuck)
-        {
-            if (escapeDirection.sqrMagnitude < 0.01f)
-            {
-                // Last resort: try different perpendicular directions
-                if (avoidanceAttempts % 2 == 0)
-                    escapeDirection = Vector2.Perpendicular(moveDirection);
-                else
-                    escapeDirection = -Vector2.Perpendicular(moveDirection);
-            }
-
-            // Set this as navigation direction if we don't have one
-            if (navigationDirection.sqrMagnitude < 0.01f)
-            {
-                navigationDirection = escapeDirection.normalized;
-                isNavigatingAround = true;
-            }
-
-            return escapeDirection.normalized * unstuckForce;
-        }
-
-        // If we're already navigating around, maintain the locked direction
-        if (isNavigatingAround && navigationDirection.sqrMagnitude > 0.01f && hasObstaclesNearby)
-        {
-            // Use the locked navigation direction
-            avoidanceVector = navigationDirection * avoidanceForce * 5f;
-
-            // Add very gentle push away from nearest obstacle only if very close
-            if (nearestObstacle != null && nearestDistance < minDistanceToObstacle * 0.75f)
-            {
-                Vector2 obstaclePos = nearestObstacle.ClosestPoint(pos);
-                Vector2 awayFromObstacle = (pos - obstaclePos).normalized;
-                float urgency = 1f - (nearestDistance / (minDistanceToObstacle * 0.75f));
-                avoidanceVector += awayFromObstacle * urgency * avoidanceForce * 0.8f;
-            }
-
-            return avoidanceVector;
-        }
-
-        // Multi-angle raycast detection for choosing initial direction
-        float angleStep = 45f / raycastAngles;
-        float leftScore = 0f;
-        float rightScore = 0f;
-        bool obstacleAhead = false;
-        RaycastHit2D centerHit = default;
-
-        for (int i = -raycastAngles; i <= raycastAngles; i++)
-        {
-            float angle = i * angleStep;
-            Vector2 dir = Quaternion.Euler(0, 0, angle) * moveDirection;
-            RaycastHit2D hit = Physics2D.Raycast(pos, dir, raycastDistance, obstacleLayer);
-
-            if (hit.collider != null && hit.collider.transform != transform)
-            {
-                if (i == 0)
-                {
-                    obstacleAhead = true;
-                    centerHit = hit;
-                }
-
-                // Score based on angle and distance
-                float angleWeight = 1f - (Mathf.Abs(angle) / 45f);
-                float distanceWeight = 1f - (hit.distance / raycastDistance);
-                float score = angleWeight * distanceWeight;
-
-                if (i < 0)
-                    leftScore += score; // Left is blocked
-                else if (i > 0)
-                    rightScore += score; // Right is blocked
-            }
-        }
-
-        // Determine navigation direction if obstacle ahead and not already navigating
-        if ((obstacleAhead || obstacleBlockingTarget) && !isNavigatingAround)
-        {
-            Vector2 perpendicular = Vector2.Perpendicular(moveDirection);
-            Vector2 toTarget = (moveTarget - pos).normalized;
-            int chosenSide = 0;
-
-            // Choose the clearer side based on multi-angle raycasts
-            if (leftScore < rightScore - 0.1f) // Left is clearer
-            {
-                chosenSide = 1; // Go left (positive perpendicular)
-            }
-            else if (rightScore < leftScore - 0.1f) // Right is clearer
-            {
-                chosenSide = -1; // Go right (negative perpendicular)
-            }
-            else // Both sides equally blocked or clear
-            {
-                // Pick based on which side angles more toward target
-                float leftDot = Vector2.Dot(perpendicular, toTarget);
-
-                if (leftDot > 0.1f)
-                    chosenSide = 1;
-                else if (leftDot < -0.1f)
-                    chosenSide = -1;
-                else
-                    chosenSide = (Random.value > 0.5f) ? 1 : -1; // Random as last resort
-            }
-
-            // Lock in the navigation direction (perpendicular + small forward bias)
-            // Small forward component helps maintain speed and progress
-            navigationDirection = (perpendicular * chosenSide * 2.5f + moveDirection).normalized;
-            isNavigatingAround = true;
-
-            if (obstacleAhead && centerHit.collider != null)
-            {
-                currentObstacle = centerHit.collider;
-            }
-            else if (nearestObstacle != null)
-            {
-                currentObstacle = nearestObstacle;
-            }
-
-            // Apply the navigation direction
-            avoidanceVector = navigationDirection * avoidanceForce * 5f;
-        }
-
-        return avoidanceVector;
+        return smoothed;
     }
 
     public void MoveTo(Vector2 worldPos, System.Action arriveCallback = null)
     {
+        // Check if the destination is on a building
+        Collider2D buildingAtTarget = Physics2D.OverlapCircle(worldPos, 0.1f, buildingsLayer);
+
+        if (buildingAtTarget != null)
+        {
+            // Find nearest walkable position around the building
+            worldPos = FindNearestWalkablePosition(worldPos, buildingAtTarget);
+        }
+
         moveTarget = worldPos;
         hasTarget = true;
-        stuckTimer = 0f;
-        avoidanceAttempts = 0;
-        navigationDirection = Vector2.zero;
-        clearanceTimer = 0f;
-        currentObstacle = null;
-        isNavigatingAround = false;
         onArrive = arriveCallback;
+        pathRecalculateTimer = 0f;
+        RecalculatePath();
+    }
+
+    private Vector2 FindNearestWalkablePosition(Vector2 targetPos, Collider2D building)
+    {
+        // Try positions in a circle around the target
+        float searchRadius = 0.5f;
+        int searchSteps = 16;
+
+        for (int ring = 1; ring <= 5; ring++)
+        {
+            float currentRadius = searchRadius * ring;
+
+            for (int i = 0; i < searchSteps; i++)
+            {
+                float angle = (i / (float)searchSteps) * 360f * Mathf.Deg2Rad;
+                Vector2 testPos = targetPos + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * currentRadius;
+
+                // Check if this position is walkable (not on a building)
+                if (!Physics2D.OverlapCircle(testPos, penguinRadius, buildingsLayer))
+                {
+                    return testPos;
+                }
+            }
+        }
+
+        // If no walkable position found, return original position
+        return targetPos;
     }
 
     public void Stop()
@@ -357,10 +540,7 @@ public class PenguinMover : MonoBehaviour
         onArrive = null;
         Velocity = Vector2.zero;
         rb.linearVelocity = Vector2.zero;
-        navigationDirection = Vector2.zero;
-        clearanceTimer = 0f;
-        currentObstacle = null;
-        isNavigatingAround = false;
+        currentPath.Clear();
     }
 
     public Vector2 GetStandPosition(Vector2 targetPos, Vector2 offset)
@@ -376,4 +556,38 @@ public class PenguinMover : MonoBehaviour
     }
 
     public Vector2 Position => rb.position;
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+
+        if (currentPath != null && currentPath.Count > 0)
+        {
+            Gizmos.color = Color.green;
+            Vector2 prev = rb.position;
+
+            for (int i = currentWaypointIndex; i < currentPath.Count; i++)
+            {
+                Gizmos.DrawLine(prev, currentPath[i]);
+                prev = currentPath[i];
+            }
+
+            if (hasTarget)
+            {
+                Gizmos.DrawLine(prev, moveTarget);
+            }
+
+            Gizmos.color = Color.cyan;
+            for (int i = currentWaypointIndex; i < currentPath.Count; i++)
+            {
+                Gizmos.DrawWireSphere(currentPath[i], 0.1f);
+            }
+        }
+
+        if (hasTarget)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(moveTarget, 0.15f);
+        }
+    }
 }
