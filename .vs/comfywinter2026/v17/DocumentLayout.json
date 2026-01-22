@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ui\\mainmenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|c:\\users\\cecil\\documents\\github\\comfywinter2026\\assets\\scripts\\penguin\\penguinmover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|C:\\Users\\cecil\\Documents\\GitHub\\comfywinter2026\\assets\\scripts\\penguin\\penguinmover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{55328043-0B2A-6617-776D-5E4D2568E72A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\penguin\\penguinmover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -64,7 +64,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\MainMenuManager.cs",
               "ToolTip": "C:\\Users\\cecil\\Documents\\GitHub\\comfywinter2026\\Assets\\Scripts\\UI\\MainMenuManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\UI\\MainMenuManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCUAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-20T18:25:41.931Z",
               "EditorCaption": ""
@@ -77,7 +77,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Penguin\\PenguinMover.cs",
               "ToolTip": "C:\\Users\\cecil\\Documents\\GitHub\\comfywinter2026\\Assets\\Scripts\\Penguin\\PenguinMover.cs",
               "RelativeToolTip": "Assets\\Scripts\\Penguin\\PenguinMover.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAswKQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAcwKQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-18T22:57:47.992Z",
               "EditorCaption": ""
