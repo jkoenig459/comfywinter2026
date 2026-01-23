@@ -22,6 +22,7 @@ desktop.ini
 # =========================
 .vscode/
 .idea/
+.vs/
 *.csproj
 *.sln
 *.user
@@ -29,6 +30,7 @@ desktop.ini
 *.pidb
 *.booproj
 *.svd
+*.suo
 
 # Rider
 .idea/
