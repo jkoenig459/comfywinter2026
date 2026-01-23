@@ -11,17 +11,32 @@ public class MainMenuManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string gameSceneName = "Main";
 
+    [Header("Transition")]
+    [SerializeField] private Animator transition;
+
     private void Start()
     {
         // Ensure main menu is shown and others are hidden
         ShowMainMenu();
     }
 
+    private void FixedUpdate()
+    {
+        // Check if animation is finished
+        if (transition.GetCurrentAnimatorStateInfo(0).IsName("main_menu_transition_end") == true)
+        {
+            // Load the main game scene
+            SceneManager.LoadScene(gameSceneName);
+        }
+    }
+
+
     // Called by Start Button
     public void OnStartButtonClicked()
     {
-        // Load the main game scene
-        SceneManager.LoadScene(gameSceneName);
+        // Play the transition animation
+        transition.SetTrigger("Transition");      
+        
     }
 
     // Called by How to Play Button

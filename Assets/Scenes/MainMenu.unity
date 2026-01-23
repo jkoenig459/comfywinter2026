@@ -562,8 +562,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c8f2ef6b8864650439ced0b531461bd0, type: 3}
-  m_Type: 2
+  m_Sprite: {fileID: -5993178227355592400, guid: 85176420dd780cc4c9ac2d943a47f3f5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1223,6 +1223,7 @@ GameObject:
   - component: {fileID: 1180921909}
   - component: {fileID: 1180921908}
   - component: {fileID: 1180921907}
+  - component: {fileID: 1180921910}
   m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -1293,6 +1294,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1180921910
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180921906}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b9f635036703aa944a80ad0844469cef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1417782403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,7 +2044,6 @@ GameObject:
   - component: {fileID: 1716561026}
   - component: {fileID: 1716561028}
   - component: {fileID: 1716561030}
-  - component: {fileID: 1716561031}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -2045,8 +2067,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -201}
-  m_SizeDelta: {x: 500, y: 356.25}
+  m_AnchoredPosition: {x: 540, y: -188}
+  m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1716561028
 CanvasRenderer:
@@ -2076,7 +2098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3820768501259357547, guid: 033bd6028f20baa4897557d7c2367ad0, type: 3}
+  m_Sprite: {fileID: 2996119775627384186, guid: 7b150d2cdb8ed7648af66317d39d3ef7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2086,28 +2108,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &1716561031
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716561025}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 22493281d17cb7240a1b20ee75c7466c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1750278578
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2281,7 @@ MonoBehaviour:
   howToPlayPanel: {fileID: 698695483}
   creditsPanel: {fileID: 33725893}
   gameSceneName: PenguinSim
+  transition: {fileID: 1180921910}
 --- !u!114 &1769880982
 MonoBehaviour:
   m_ObjectHideFlags: 0
