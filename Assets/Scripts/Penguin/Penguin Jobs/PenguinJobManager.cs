@@ -43,6 +43,7 @@ public class PenguinJobs : MonoBehaviour
 
     [Header("Hauling")]
     public float collectHold = 0.45f;
+    public GameObject droppedResourcePrefab;
 
     [Header("Nearest Pile")]
     public float pileReuseRadius = 0.35f;
@@ -58,7 +59,7 @@ public class PenguinJobs : MonoBehaviour
     private PenguinIceJob iceJob;
     private PenguinHaulJob haulJob;
 
-    public bool CanAcceptOrders => state != JobState.ReturningToDropoff;
+    public bool CanAcceptOrders => true;
 
     private void Awake()
     {
@@ -72,7 +73,7 @@ public class PenguinJobs : MonoBehaviour
 
         fishJob.Initialize(this, mover, anim);
         iceJob.Initialize(this, mover, anim);
-        haulJob.Initialize(this, mover, anim, carryVis);
+        haulJob.Initialize(this, mover, anim, carryVis, droppedResourcePrefab);
 
         anim.SetIdle();
         carryVis.HideCarried();
@@ -164,6 +165,19 @@ public class PenguinJobs : MonoBehaviour
         state = JobState.MovingToPebble;
 
         haulJob.BeginPebble(pebble);
+    }
+
+    public void AssignPickupDropped(DroppedResource dropped)
+    {
+        if (!CanAcceptOrders) return;
+        if (dropped == null || dropped.IsPickedUp) return;
+
+        CancelWork();
+
+        lookAtPos = dropped.transform.position;
+        state = JobState.MovingToPile;
+
+        haulJob.BeginDropped(dropped);
     }
 
 

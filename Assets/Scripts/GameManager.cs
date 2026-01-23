@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
         I = this;
         DontDestroyOnLoad(gameObject);
+
+        // Prevent penguins from colliding with each other (Layer 8 = Penguin layer)
+        Physics2D.IgnoreLayerCollision(8, 8, true);
     }
 
     public void AddIce(int amount) => ice += amount;
@@ -32,5 +35,17 @@ public class GameManager : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
+    }
+
+    private void Update()
+    {
+        // Debug cheat: F1 to add resources for testing
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            AddIce(50);
+            AddFood(50);
+            AddPebbles(50);
+            Debug.Log("Added 50 of each resource! Ice: " + ice + ", Food: " + food + ", Pebbles: " + pebbles);
+        }
     }
 }

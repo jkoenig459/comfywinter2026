@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 5875312484630908951}
   - component: {fileID: 1670965774657468718}
   - component: {fileID: 654863977127510269}
+  - component: {fileID: -7173247057764269694}
   - component: {fileID: 2112275373340488320}
   m_Layer: 8
   m_Name: Penguin
@@ -309,6 +310,7 @@ MonoBehaviour:
   iceAddToPileDelay: 0.1
   icePileOffset: {x: 0, y: 1.25}
   collectHold: 0.45
+  droppedResourcePrefab: {fileID: 3972375667246221407, guid: bd17727e99cb61d4c9ac43edd1b5551a, type: 3}
   pileReuseRadius: 0.35
 --- !u!114 &5310347144937209662
 MonoBehaviour:
@@ -326,14 +328,12 @@ MonoBehaviour:
   defaultWorkOffset: {x: 0, y: 0}
   fishingOffset: {x: 1, y: 0.5}
   iceOffset: {x: 0, y: 0}
+  buildingsLayer:
+    serializedVersion: 2
+    m_Bits: 64
   gridCellSize: 0.4
   penguinRadius: 0.25
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 192
   pathRecalculateInterval: 0.3
-  arrivalDistance: 0.1
-  waypointReachDistance: 0.25
   gridPadding: 8
   maxIterations: 2000
 --- !u!114 &180694866203800584
@@ -398,6 +398,20 @@ MonoBehaviour:
   footstepInterval: 0.5
   footstepVolume: 0.15
   workVolume: 0.6
+--- !u!114 &-7173247057764269694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa90624ffc873e244b1891a64ec6979b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorter
+  sortingOrderMultiplier: 100
+  sortingOrderOffset: 0
 --- !u!82 &2112275373340488320
 AudioSource:
   m_ObjectHideFlags: 0

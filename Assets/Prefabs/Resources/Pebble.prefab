@@ -127,7 +127,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -137,7 +137,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.25, y: 0.25}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &4173262795195619846
 MonoBehaviour:
@@ -151,5 +151,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa470317ed10c544b3d02eda8264387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pebble
-  carrySprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  carrySprite: {fileID: 6121337210303470225, guid: 5dec41adcd2b1b846a04217f55c4e918, type: 3}
   destroyOnPickup: 1

@@ -23,14 +23,11 @@ public class CommandInput : MonoBehaviour
         var unit = selectedObj.GetComponentInParent<PenguinJobs>();
         if (unit == null) return;
 
-        // Block orders while dropping off resources
-        if (!unit.CanAcceptOrders)
-            return;
-
         if (cam == null) cam = Camera.main;
         Vector2 world = cam.ScreenToWorldPoint(Input.mousePosition);
 
         var hit = Physics2D.Raycast(world, Vector2.zero);
+
         if (hit.collider != null)
         {
             // Check for pebble first
@@ -38,6 +35,14 @@ public class CommandInput : MonoBehaviour
             if (pebble != null && !pebble.IsPickedUp)
             {
                 unit.AssignPickupPebble(pebble);
+                return;
+            }
+
+            // Check for dropped resources
+            var dropped = hit.collider.GetComponentInParent<DroppedResource>();
+            if (dropped != null && !dropped.IsPickedUp)
+            {
+                unit.AssignPickupDropped(dropped);
                 return;
             }
 

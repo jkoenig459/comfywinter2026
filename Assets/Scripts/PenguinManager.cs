@@ -26,5 +26,11 @@ public class PenguinManager : MonoBehaviour
         penguin.dropoffPoint = dropoffPoint;
         penguin.fishPilePrefab = fishPilePrefab;
         penguin.icePilePrefab = icePilePrefab;
+
+        // Add Y-position sorting if not already present
+        if (penguin.GetComponent<YSorter>() == null)
+        {
+            penguin.gameObject.AddComponent<YSorter>();
+        }
     }
 }

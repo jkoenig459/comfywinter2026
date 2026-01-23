@@ -246,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: orthographic size
-      value: 8.4375
+      value: 7.546875
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -546,6 +546,16 @@ Transform:
 --- !u!4 &707379169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4925721306604488210, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
+  m_PrefabInstance: {fileID: 5599759698546729446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &780690807 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5237463071853847105, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
+  m_PrefabInstance: {fileID: 5599759698546729446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &875944062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2369827197438991462, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
   m_PrefabInstance: {fileID: 5599759698546729446}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &957803245 stripped
@@ -1355,6 +1365,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 410977448}
     m_Modifications:
     - target: {fileID: 57244899974886017, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
+      propertyPath: leftWorker
+      value: 
+      objectReference: {fileID: 875944062}
+    - target: {fileID: 57244899974886017, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
+      propertyPath: rightWorker
+      value: 
+      objectReference: {fileID: 780690807}
+    - target: {fileID: 57244899974886017, guid: abe98bed99ad9914a983473ec3d8d518, type: 3}
       propertyPath: yieldAmount
       value: 2
       objectReference: {fileID: 0}
@@ -1628,14 +1646,6 @@ PrefabInstance:
     - target: {fileID: 2926440194394995602, guid: b885a8ba2c3bfa543960b8266ca4b403, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583914387012221330, guid: b885a8ba2c3bfa543960b8266ca4b403, type: 3}
-      propertyPath: m_Size.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583914387012221330, guid: b885a8ba2c3bfa543960b8266ca4b403, type: 3}
-      propertyPath: m_Size.y
-      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7186058846937541401, guid: b885a8ba2c3bfa543960b8266ca4b403, type: 3}
       propertyPath: m_Name

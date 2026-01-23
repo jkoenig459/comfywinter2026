@@ -14,8 +14,10 @@ public class PenguinIceJob : MonoBehaviour
     private PenguinAudio penguinAudio;
 
     private Transform node;
+    private ResourceNode resourceNode;
     private ResourcePile pile;
     private Coroutine routine;
+    private Transform assignedWorkerPosition;
 
     public void Initialize(PenguinJobs jobs, PenguinMover mover, PenguinAnimator anim)
     {
@@ -30,11 +32,30 @@ public class PenguinIceJob : MonoBehaviour
         Cancel();
 
         node = nodeTransform;
+        resourceNode = node.GetComponent<ResourceNode>();
+
+        // Check if node can accept more workers
+        if (resourceNode != null && !resourceNode.CanAcceptWorker)
+        {
+            // Node is full, can't work here
+            jobs.SetStateIdle();
+            return;
+        }
+
+        // Register this penguin with the node and get assigned worker position
+        Transform workerPos = null;
+        if (resourceNode != null)
+        {
+            resourceNode.TryRegisterWorker(jobs, out workerPos);
+            assignedWorkerPosition = workerPos;
+        }
+
         jobs.SetLookAt(node.position);
 
         pile = jobs.GetOrCreatePileAt(node.position, jobs.icePilePrefab, jobs.icePileOffset);
 
-        Vector2 stand = mover.GetStandPosition(node.position, mover.iceOffset);
+        // Determine position based on assigned worker position or fallback
+        Vector2 stand = GetWorkPosition();
 
         anim.SetWalking();
         anim.FaceToward(node.position, mover.Position);
@@ -45,6 +66,29 @@ public class PenguinIceJob : MonoBehaviour
             anim.SetCuttingLoop();
             routine = StartCoroutine(IceLoop());
         });
+    }
+
+    private Vector2 GetWorkPosition()
+    {
+        // If node has assigned worker position (leftWorker/rightWorker child transforms), use that
+        if (assignedWorkerPosition != null)
+        {
+            return assignedWorkerPosition.position;
+        }
+
+        // Otherwise fall back to offset system (for nodes without child transforms)
+        if (resourceNode != null && !resourceNode.IsFirstWorker(jobs))
+        {
+            // Second worker - flip to opposite side
+            Vector2 baseOffset = mover.iceOffset;
+            Vector2 flippedOffset = new Vector2(-baseOffset.x, baseOffset.y);
+            return mover.GetStandPosition(node.position, flippedOffset);
+        }
+        else
+        {
+            // First worker - use normal position
+            return mover.GetStandPosition(node.position, mover.iceOffset);
+        }
     }
 
     private IEnumerator IceLoop()
@@ -104,7 +148,15 @@ public class PenguinIceJob : MonoBehaviour
             routine = null;
         }
 
+        // Unregister from the node
+        if (resourceNode != null && jobs != null)
+        {
+            resourceNode.UnregisterWorker(jobs);
+        }
+
         node = null;
+        resourceNode = null;
         pile = null;
+        assignedWorkerPosition = null;
     }
 }

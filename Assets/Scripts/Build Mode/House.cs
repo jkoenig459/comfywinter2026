@@ -22,11 +22,11 @@ public class House : MonoBehaviour
     public int penguinPebbleCost = 1;
 
     [Header("Collider")]
-    [Tooltip("If true, automatically resize BoxCollider2D to match sprite bounds on upgrade.")]
+    [Tooltip("If true, automatically resize collider to match sprite bounds on upgrade.")]
     public bool autoResizeCollider = true;
 
     private SpriteRenderer spriteRenderer;
-    private BoxCollider2D boxCollider;
+    private CircleCollider2D circleCollider;
 
     public const int MAX_TIER = 3;
 
@@ -66,11 +66,13 @@ public class House : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        boxCollider = GetComponent<BoxCollider2D>();
-        if (boxCollider == null)
-            boxCollider = GetComponentInChildren<BoxCollider2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
+        if (circleCollider == null)
+            circleCollider = GetComponentInChildren<CircleCollider2D>();
 
-        UpdateSprite();
+        // Only update sprite on awake, don't update collider
+        // Collider should use prefab settings on initial spawn
+        UpdateSprite(updateCollider: false);
     }
 
     public bool TryUpgrade()
@@ -85,13 +87,13 @@ public class House : MonoBehaviour
 
         GameManager.I.ice -= cost;
         currentTier++;
-        UpdateSprite();
+        UpdateSprite(updateCollider: true);
 
         Debug.Log($"House upgraded to Tier {currentTier}! Max penguins: {MaxPenguins}");
         return true;
     }
 
-    private void UpdateSprite()
+    private void UpdateSprite(bool updateCollider = true)
     {
         if (spriteRenderer == null) return;
 
@@ -115,7 +117,10 @@ public class House : MonoBehaviour
             Vector2 offset = oldBottom - newBottom;
             transform.position += (Vector3)offset;
 
-            UpdateCollider(targetSprite);
+            if (updateCollider)
+            {
+                UpdateCollider(targetSprite);
+            }
         }
     }
 
@@ -131,11 +136,23 @@ public class House : MonoBehaviour
     private void UpdateCollider(Sprite sprite)
     {
         if (!autoResizeCollider) return;
-        if (boxCollider == null || sprite == null) return;
+        if (circleCollider == null || sprite == null) return;
 
-        // Resize and recalculate offset based on new sprite bounds
-        boxCollider.size = sprite.bounds.size;
-        boxCollider.offset = sprite.bounds.center;
+        // Calculate radius from sprite dimensions
+        // Use the larger dimension (width or height) divided by 2
+        float width = sprite.rect.width / sprite.pixelsPerUnit;
+        float height = sprite.rect.height / sprite.pixelsPerUnit;
+        float newRadius = Mathf.Max(width, height) * 0.5f;
+
+        // Calculate offset: distance from pivot to sprite's rect center
+        Vector2 rectCenter = new Vector2(sprite.rect.width * 0.5f, sprite.rect.height * 0.5f);
+        Vector2 pivotToCenter = rectCenter - sprite.pivot;
+        Vector2 newOffset = pivotToCenter / sprite.pixelsPerUnit;
+
+        circleCollider.radius = newRadius;
+        circleCollider.offset = newOffset;
+
+        Debug.Log($"Updated collider for tier {currentTier}: radius={newRadius}, offset={newOffset}");
     }
 
     public string GetUpgradeDescription()

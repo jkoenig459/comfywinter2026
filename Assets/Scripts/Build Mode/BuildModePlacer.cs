@@ -26,7 +26,7 @@ public class BuildModePlacer : MonoBehaviour
     private int selectedCost;
 
     private GameObject ghost;
-    private BoxCollider2D ghostCollider;
+    private Collider2D ghostCollider;
 
     public bool IsPlacing => ghost != null;
 
@@ -76,9 +76,9 @@ public class BuildModePlacer : MonoBehaviour
 
         ForceGhostRenderOnTop(ghost);
 
-        ghostCollider = ghost.GetComponent<BoxCollider2D>();
+        ghostCollider = ghost.GetComponent<Collider2D>();
         if (ghostCollider == null)
-            ghostCollider = ghost.GetComponentInChildren<BoxCollider2D>();
+            ghostCollider = ghost.GetComponentInChildren<Collider2D>();
     }
 
     private void ForceGhostRenderOnTop(GameObject ghostObj)
@@ -128,10 +128,28 @@ public class BuildModePlacer : MonoBehaviour
         bool wasEnabled = ghostCollider.enabled;
         if (!wasEnabled) ghostCollider.enabled = true;
 
-        var center = (Vector2)ghostCollider.bounds.center;
-        var size = (Vector2)ghostCollider.bounds.size;
+        Collider2D[] hits;
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, blockingLayers);
+        // Use appropriate overlap check based on collider type
+        if (ghostCollider is BoxCollider2D boxCollider)
+        {
+            var center = (Vector2)boxCollider.bounds.center;
+            var size = (Vector2)boxCollider.bounds.size;
+            hits = Physics2D.OverlapBoxAll(center, size, 0f, blockingLayers);
+        }
+        else if (ghostCollider is CircleCollider2D circleCollider)
+        {
+            var center = (Vector2)circleCollider.bounds.center;
+            var radius = circleCollider.radius;
+            hits = Physics2D.OverlapCircleAll(center, radius, blockingLayers);
+        }
+        else
+        {
+            // Fallback for other collider types
+            var center = (Vector2)ghostCollider.bounds.center;
+            var size = (Vector2)ghostCollider.bounds.size;
+            hits = Physics2D.OverlapBoxAll(center, size, 0f, blockingLayers);
+        }
 
         if (!wasEnabled) ghostCollider.enabled = false;
 
