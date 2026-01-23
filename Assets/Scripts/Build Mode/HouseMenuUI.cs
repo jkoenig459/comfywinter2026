@@ -147,7 +147,27 @@ public class HouseMenuUI : MonoBehaviour
         }
 
         if (itemName != null) itemName.text = "+1 Penguin";
-        if (itemDesc != null) itemDesc.text = "Spawn a new penguin at this house.";
+
+        // Check if house is at max capacity
+        if (!currentHouse.CanCreatePenguin)
+        {
+            // At max tier and max penguins
+            if (!currentHouse.CanUpgrade)
+            {
+                if (itemDesc != null) itemDesc.text = $"This house has reached the maximum of {currentHouse.MaxPenguins} penguins!";
+                if (itemCost != null) itemCost.text = "";
+            }
+            // Can upgrade to get more penguin slots
+            else
+            {
+                if (itemDesc != null) itemDesc.text = "This house is full! Upgrade the house to create more penguins.";
+                if (itemCost != null) itemCost.text = "";
+            }
+            return;
+        }
+
+        // Can create penguin
+        if (itemDesc != null) itemDesc.text = $"Spawn a new penguin at this house. ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins} created)";
         if (itemCost != null) itemCost.text = $"{currentHouse.penguinFishCost} Fish, {currentHouse.penguinPebbleCost} Pebble";
     }
 
@@ -209,6 +229,13 @@ public class HouseMenuUI : MonoBehaviour
             return false;
         }
 
+        // Check if house can create more penguins
+        if (!currentHouse.CanCreatePenguin)
+        {
+            Debug.Log($"HouseMenuUI: House is at max capacity ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins}).");
+            return false;
+        }
+
         if (penguinPrefab == null)
         {
             Debug.LogError("HouseMenuUI: Penguin prefab not assigned!");
@@ -244,7 +271,10 @@ public class HouseMenuUI : MonoBehaviour
                 PenguinManager.I.InitializePenguin(jobs);
         }
 
-        Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}!");
+        // Increment the penguin counter for this house
+        currentHouse.IncrementPenguinCount();
+
+        Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}! ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins})");
         return true;
     }
 }

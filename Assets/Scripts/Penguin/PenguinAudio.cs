@@ -84,7 +84,8 @@ public class PenguinAudio : MonoBehaviour
     {
         if (footstepSounds.Length == 0) return;
         var clip = footstepSounds[Random.Range(0, footstepSounds.Length)];
-        audioSource.PlayOneShot(clip, footstepVolume);
+        float volume = footstepVolume * (AudioManager.I != null ? AudioManager.I.penguinSFXVolume : 1f);
+        audioSource.PlayOneShot(clip, volume);
     }
 
     public void PlayFishingSound()
@@ -92,7 +93,10 @@ public class PenguinAudio : MonoBehaviour
         if (!IsSelected()) return;
 
         if (fishingSound != null)
-            audioSource.PlayOneShot(fishingSound, workVolume);
+        {
+            float volume = workVolume * (AudioManager.I != null ? AudioManager.I.penguinSFXVolume : 1f);
+            audioSource.PlayOneShot(fishingSound, volume);
+        }
     }
 
     public void PlayIceBreakingSound()
@@ -100,6 +104,9 @@ public class PenguinAudio : MonoBehaviour
         if (!IsSelected()) return;
 
         if (iceBreakingSound != null)
-            audioSource.PlayOneShot(iceBreakingSound, workVolume);
+        {
+            float volume = workVolume * (AudioManager.I != null ? AudioManager.I.penguinSFXVolume : 1f);
+            audioSource.PlayOneShot(iceBreakingSound, volume);
+        }
     }
 }

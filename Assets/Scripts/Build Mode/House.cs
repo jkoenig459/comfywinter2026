@@ -4,6 +4,7 @@ public class House : MonoBehaviour
 {
     [Header("Tier Settings")]
     [SerializeField] private int currentTier = 1;
+    [SerializeField] private int penguinsCreated = 0;
 
     [Header("Sprites (assign in Inspector)")]
     [Tooltip("Sprite for Tier 1 house")]
@@ -32,6 +33,7 @@ public class House : MonoBehaviour
 
     public int CurrentTier => currentTier;
     public bool CanUpgrade => currentTier < MAX_TIER;
+    public int PenguinsCreated => penguinsCreated;
 
     public int MaxPenguins
     {
@@ -45,6 +47,14 @@ public class House : MonoBehaviour
                 _ => 2
             };
         }
+    }
+
+    public bool CanCreatePenguin => penguinsCreated < MaxPenguins;
+    public int RemainingPenguinSlots => Mathf.Max(0, MaxPenguins - penguinsCreated);
+
+    public void IncrementPenguinCount()
+    {
+        penguinsCreated++;
     }
 
     public int UpgradeCost

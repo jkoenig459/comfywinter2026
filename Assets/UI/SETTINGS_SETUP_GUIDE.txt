@@ -1,0 +1,175 @@
+================================================================================
+                    SETTINGS UI SETUP GUIDE
+================================================================================
+
+This guide will help you set up the Settings button and Settings menu with
+sound sliders. Custom sprites can be easily added when your artist provides them.
+
+================================================================================
+STEP 1: CREATE THE SETTINGS BUTTON UI
+================================================================================
+
+1. In Unity, create a new UI Document GameObject:
+   - Right-click in Hierarchy > UI Toolkit > UI Document
+   - Name it "SettingsButton"
+
+2. Assign the UXML template:
+   - Select the SettingsButton GameObject
+   - In Inspector, find the UI Document component
+   - Drag "SettingsButton_Template.uxml" to the Source Asset field
+
+3. Create and assign USS stylesheet:
+   - In Inspector, under "Style Sheets", click the + button
+   - Drag "Settings_Template.uss" into the list
+
+4. Add the SettingsButton script:
+   - Add Component > Scripts > SettingsButton
+   - Leave "Settings UI" empty for now (we'll set this in Step 2)
+
+5. Position the button:
+   - The button will appear in the top right corner automatically
+   - Adjust position in the UXML if needed
+
+================================================================================
+STEP 2: CREATE THE SETTINGS PANEL UI
+================================================================================
+
+1. Create another UI Document GameObject:
+   - Right-click in Hierarchy > UI Toolkit > UI Document
+   - Name it "SettingsUI"
+
+2. Assign the UXML template:
+   - Select the SettingsUI GameObject
+   - Drag "SettingsUI_Template.uxml" to Source Asset
+
+3. Assign the same USS stylesheet:
+   - Add "Settings_Template.uss" to Style Sheets list
+
+4. Add the MenuController script:
+   - Add Component > Scripts > MenuController
+   - Set "Menu ID" to "Settings"
+   - Check "Start Hidden"
+
+5. Add the SettingsUI script:
+   - Add Component > Scripts > SettingsUI
+   - The Menu Controller field should auto-populate
+
+6. Connect the button to the panel:
+   - Go back to the SettingsButton GameObject
+   - Drag the SettingsUI GameObject to the "Settings UI" field
+
+================================================================================
+STEP 3: TEST THE BASIC SETUP
+================================================================================
+
+1. Play the game
+2. Click the settings button (⚙ icon) in the top right
+3. The settings panel should appear with 3 sliders
+4. Adjust the sliders to change volume levels
+5. Click "Close" to close the panel
+
+The sliders should work and save settings automatically!
+
+================================================================================
+STEP 4: ADD CUSTOM SPRITES (WHEN AVAILABLE)
+================================================================================
+
+SETTINGS BUTTON SPRITE:
+1. Import your gear/settings icon sprite into Unity
+2. Select the SettingsButton GameObject
+3. In the SettingsButton component, drag your sprite to "Custom Button Sprite"
+
+ALTERNATIVE METHOD (via USS):
+1. Open Settings_Template.uss
+2. Find the .settings-button section
+3. Add: background-image: resource('your-sprite-name');
+4. Remove or comment out: background-color: rgba(0, 0, 0, 0.5);
+
+SLIDER SPRITES:
+1. Open Settings_Template.uss
+2. Find the sections marked with "TO ADD CUSTOM SPRITE:"
+3. Follow the instructions to add:
+   - Slider track sprite
+   - Slider fill sprite
+   - Slider handle/thumb sprite
+4. Each slider part can use a different sprite
+
+PANEL BACKGROUND:
+1. Open Settings_Template.uss
+2. Find .settings-content
+3. Add: background-image: resource('panel-bg-sprite-name');
+
+CLOSE BUTTON:
+1. Open Settings_Template.uss
+2. Find .close-button
+3. Add: background-image: resource('close-button-sprite-name');
+
+================================================================================
+SPRITE IMPORT SETTINGS
+================================================================================
+
+For best results with UI Toolkit sprites:
+1. Select your sprite in Unity
+2. In Inspector, set:
+   - Texture Type: Sprite (2D and UI)
+   - Sprite Mode: Single
+   - Pixels Per Unit: 100 (adjust as needed)
+   - Filter Mode: Bilinear
+   - Compression: None (for crisp UI)
+3. Click Apply
+
+================================================================================
+VOLUME CATEGORIES
+================================================================================
+
+The system has 3 separate volume controls:
+
+1. MUSIC VOLUME
+   - Controls background music
+   - Connected to musicSource in AudioManager
+
+2. PENGUIN SFX VOLUME
+   - Controls penguin sounds (footsteps, fishing, ice breaking)
+   - Applies to all PenguinAudio sounds
+
+3. RESOURCE SFX VOLUME
+   - Controls resource-related sounds (pile sounds, building sounds)
+   - Applies to AudioManager.PlayPileFish(), PlayPileIce(), etc.
+
+All settings are saved automatically using PlayerPrefs.
+
+================================================================================
+CUSTOMIZATION TIPS
+================================================================================
+
+- Button size: Edit .settings-button width/height in USS
+- Panel size: Edit .settings-content width in USS
+- Slider height: Edit .volume-slider height in USS
+- Colors: Change rgba() values in USS
+- Fonts: Add font-size properties in USS
+- Spacing: Adjust margin-top/bottom/left/right in USS
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+SLIDERS DON'T WORK:
+- Make sure UIDocument has the correct UXML assigned
+- Check that element names match exactly (case-sensitive)
+- Verify SettingsUI script is attached
+
+BUTTON DOESN'T APPEAR:
+- Check that SettingsButton GameObject is active
+- Verify UXML is assigned to UIDocument
+- Make sure USS stylesheet is in the Style Sheets list
+
+SETTINGS DON'T SAVE:
+- Settings are saved in PlayerPrefs automatically
+- To clear saved settings: Edit > Clear All PlayerPrefs
+
+CUSTOM SPRITES DON'T SHOW:
+- Make sure sprite is in a Resources folder OR
+- Reference it by name in USS: resource('sprite-name')
+- Check sprite import settings (see section above)
+
+================================================================================
