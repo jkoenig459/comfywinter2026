@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public int food = 0;
     public int pebbles = 0;
 
+    [Header("Storage")]
+    public int maxStorage = 10;
+
     [Header("Pause")]
     public bool isPaused;
 
@@ -27,9 +30,20 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 8, true);
     }
 
-    public void AddIce(int amount) => ice += amount;
-    public void AddFood(int amount) => food += amount;
-    public void AddPebbles(int amount) => pebbles += amount;
+    public void AddIce(int amount)
+    {
+        ice = Mathf.Min(ice + amount, maxStorage);
+    }
+
+    public void AddFood(int amount)
+    {
+        food = Mathf.Min(food + amount, maxStorage);
+    }
+
+    public void AddPebbles(int amount)
+    {
+        pebbles = Mathf.Min(pebbles + amount, maxStorage);
+    }
 
     public void TogglePause()
     {

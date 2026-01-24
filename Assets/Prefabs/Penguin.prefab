@@ -332,7 +332,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   gridCellSize: 0.4
-  penguinRadius: 0.25
+  penguinRadius: 0.35
   pathRecalculateInterval: 0.3
   gridPadding: 8
   maxIterations: 2000

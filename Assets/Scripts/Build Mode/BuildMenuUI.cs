@@ -86,8 +86,26 @@ public class BuildMenuUI : MonoBehaviour
         currentSelection = BuildSelection.Storage;
 
         if (itemName != null) itemName.text = "Storage";
-        if (itemDesc != null) itemDesc.text = "Store resources to prevent decay";
-        if (itemCost != null) itemCost.text = "3 Ice, 2 Snow";
+
+        // Check if storage exists
+        if (Storage.I == null)
+        {
+            if (itemDesc != null) itemDesc.text = "Storage system not found!";
+            if (itemCost != null) itemCost.text = "";
+            return;
+        }
+
+        // Check if can upgrade
+        if (!Storage.I.CanUpgrade)
+        {
+            if (itemDesc != null) itemDesc.text = "Storage is already at maximum capacity!";
+            if (itemCost != null) itemCost.text = "";
+            return;
+        }
+
+        // Show upgrade info
+        if (itemDesc != null) itemDesc.text = Storage.I.GetUpgradeDescription();
+        if (itemCost != null) itemCost.text = $"{Storage.I.UpgradeCost} Ice";
     }
 
     private void SelectResearch()
@@ -95,8 +113,8 @@ public class BuildMenuUI : MonoBehaviour
         currentSelection = BuildSelection.Research;
 
         if (itemName != null) itemName.text = "Upgrade HQ";
-        if (itemDesc != null) itemDesc.text = "Unlock new technologies and buildings";
-        if (itemCost != null) itemCost.text = "10 Ice, 5 Snow";
+        if (itemDesc != null) itemDesc.text = "Coming soon! Unlock new technologies and buildings.";
+        if (itemCost != null) itemCost.text = "";
     }
 
     private void OnConfirmClicked()
@@ -104,18 +122,56 @@ public class BuildMenuUI : MonoBehaviour
         if (currentSelection == BuildSelection.None)
             return;
 
+        bool success = false;
+
         switch (currentSelection)
         {
             case BuildSelection.House:
                 BuildModePlacer.I?.BeginPlacingHouse();
+                success = true;
                 break;
             case BuildSelection.Storage:
+                success = TryUpgradeStorage();
                 break;
             case BuildSelection.Research:
                 break;
         }
 
-        menuController?.Close();
-        ShowDefaultInfo();
+        if (success)
+        {
+            menuController?.Close();
+            ShowDefaultInfo();
+        }
+    }
+
+    private bool TryUpgradeStorage()
+    {
+        if (Storage.I == null)
+        {
+            Debug.LogWarning("BuildMenuUI: Storage system not found.");
+            return false;
+        }
+
+        if (!Storage.I.CanUpgrade)
+        {
+            Debug.Log("BuildMenuUI: Storage is already at max tier.");
+            return false;
+        }
+
+        int cost = Storage.I.UpgradeCost;
+
+        if (GameManager.I == null || GameManager.I.ice < cost)
+        {
+            Debug.Log($"BuildMenuUI: Not enough ice. Need {cost}, have {GameManager.I?.ice ?? 0}");
+            return false;
+        }
+
+        if (Storage.I.TryUpgrade())
+        {
+            Debug.Log($"BuildMenuUI: Storage upgraded to tier {Storage.I.CurrentTier}!");
+            return true;
+        }
+
+        return false;
     }
 }

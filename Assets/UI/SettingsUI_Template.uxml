@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <!-- Settings Panel - Hidden by default, shown via MenuController -->
+    <ui:VisualElement name="SettingsPanel" class="settings-panel">
+        <ui:VisualElement name="SettingsContent" class="settings-content">
+            <!-- Title -->
+            <ui:Label text="Settings" class="settings-title" />
+
+            <!-- Music Volume -->
+            <ui:VisualElement name="MusicContainer" class="slider-container">
+                <ui:Label name="MusicLabel" text="Music: 100%" class="slider-label" />
+                <ui:Slider name="MusicSlider" low-value="0" high-value="1" value="1" class="volume-slider" />
+            </ui:VisualElement>
+
+            <!-- Penguin SFX Volume -->
+            <ui:VisualElement name="PenguinSFXContainer" class="slider-container">
+                <ui:Label name="PenguinSFXLabel" text="Penguin SFX: 100%" class="slider-label" />
+                <ui:Slider name="PenguinSFXSlider" low-value="0" high-value="1" value="1" class="volume-slider" />
+            </ui:VisualElement>
+
+            <!-- Resource SFX Volume -->
+            <ui:VisualElement name="ResourceSFXContainer" class="slider-container">
+                <ui:Label name="ResourceSFXLabel" text="Resource SFX: 100%" class="slider-label" />
+                <ui:Slider name="ResourceSFXSlider" low-value="0" high-value="1" value="1" class="volume-slider" />
+            </ui:VisualElement>
+
+            <!-- Close Button -->
+            <ui:Button name="CloseButton" text="Close" class="close-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

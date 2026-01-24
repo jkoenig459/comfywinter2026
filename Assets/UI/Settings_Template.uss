@@ -1,0 +1,184 @@
+/* ====================================
+   SETTINGS BUTTON STYLES
+   ==================================== */
+
+.settings-button {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    border-width: 2px;
+    border-color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* TO ADD CUSTOM SPRITE:
+       1. Import your sprite into Unity
+       2. Add this line and replace 'your-sprite-name' with your sprite's name:
+       background-image: resource('your-sprite-name');
+       3. Remove or comment out the background-color line above
+    */
+}
+
+.settings-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    scale: 1.1;
+}
+
+.settings-button:active {
+    scale: 0.95;
+}
+
+
+/* ====================================
+   SETTINGS PANEL STYLES
+   ==================================== */
+
+.settings-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.settings-content {
+    width: 400px;
+    padding: 30px;
+    background-color: rgba(50, 50, 50, 0.95);
+    border-width: 3px;
+    border-color: white;
+    border-radius: 10px;
+
+    /* TO ADD CUSTOM PANEL BACKGROUND:
+       background-image: resource('panel-background-sprite-name');
+    */
+}
+
+.settings-title {
+    font-size: 32px;
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+
+/* ====================================
+   SLIDER STYLES
+   ==================================== */
+
+.slider-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.slider-label {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.volume-slider {
+    height: 30px;
+}
+
+/* Slider Track (the background bar) */
+.volume-slider .unity-base-slider__tracker {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 5px;
+    height: 10px;
+
+    /* TO ADD CUSTOM TRACK SPRITE:
+       background-image: resource('slider-track-sprite-name');
+    */
+}
+
+/* Slider Fill (the filled portion) */
+.volume-slider .unity-base-slider__dragger-border {
+    background-color: rgba(100, 150, 255, 0.8);
+    border-radius: 5px;
+
+    /* TO ADD CUSTOM FILL SPRITE:
+       background-image: resource('slider-fill-sprite-name');
+    */
+}
+
+/* Slider Handle (the draggable thumb) */
+.volume-slider .unity-base-slider__dragger {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0.5);
+
+    /* TO ADD CUSTOM HANDLE SPRITE:
+       background-image: resource('slider-handle-sprite-name');
+    */
+}
+
+.volume-slider .unity-base-slider__dragger:hover {
+    scale: 1.2;
+}
+
+
+/* ====================================
+   CLOSE BUTTON STYLES
+   ==================================== */
+
+.close-button {
+    margin-top: 20px;
+    height: 40px;
+    font-size: 20px;
+    background-color: rgba(150, 50, 50, 0.8);
+    border-width: 2px;
+    border-color: white;
+    border-radius: 5px;
+    color: white;
+
+    /* TO ADD CUSTOM CLOSE BUTTON SPRITE:
+       background-image: resource('close-button-sprite-name');
+    */
+}
+
+.close-button:hover {
+    background-color: rgba(200, 50, 50, 1);
+    scale: 1.05;
+}
+
+.close-button:active {
+    scale: 0.95;
+}
+
+
+/* ====================================
+   INSTRUCTIONS FOR CUSTOM SPRITES
+   ==================================== */
+
+/*
+TO ADD YOUR CUSTOM SPRITES:
+
+1. Import your sprites into Unity (place them in Assets/UI/Sprites or similar)
+
+2. For each sprite you want to use, find the corresponding style above
+
+3. Add or uncomment the background-image line with your sprite name:
+   background-image: resource('your-sprite-name');
+
+4. You may want to remove or adjust:
+   - background-color (if sprite has its own color)
+   - border-radius (if sprite has custom shape)
+   - width/height (to match sprite dimensions)
+
+EXAMPLE:
+  .settings-button {
+      width: 64px;
+      height: 64px;
+      background-image: resource('gear-icon');
+      background-color: transparent;
+  }
+
+SLIDER CUSTOMIZATION:
+  - Sliders have 3 parts: Track, Fill, and Handle
+  - Each can use different sprites
+  - Make sure sprites are sized appropriately (track is wider, handle is small)
+*/
