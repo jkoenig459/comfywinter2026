@@ -94,6 +94,11 @@ public class PenguinHaulJob : MonoBehaviour
     private IEnumerator CollectFromPileThenReturn()
     {
         anim.PlayCollecting();
+
+        // Play gather sound when bending over to pick up resource
+        if (AudioManager.I != null)
+            AudioManager.I.PlayPenguinGather();
+
         yield return new WaitForSeconds(jobs.collectHold);
 
         int taken = 0;
@@ -146,6 +151,10 @@ public class PenguinHaulJob : MonoBehaviour
 
             carryVis.ShowCarried(carrySprite);
             anim.SetCarrying(true);
+
+            // Play pebble pickup sound
+            if (AudioManager.I != null)
+                AudioManager.I.PlayPebblePickup();
         }
 
         anim.StopCollecting();
@@ -170,6 +179,11 @@ public class PenguinHaulJob : MonoBehaviour
         while (pickupPile != null && !pickupPile.IsEmpty)
         {
             anim.PlayCollecting();
+
+            // Play gather sound when bending over to pick up resource
+            if (AudioManager.I != null)
+                AudioManager.I.PlayPenguinGather();
+
             yield return new WaitForSeconds(jobs.collectHold);
 
             int taken = 0;
@@ -236,6 +250,11 @@ public class PenguinHaulJob : MonoBehaviour
     private IEnumerator CollectDroppedThenReturn()
     {
         anim.PlayCollecting();
+
+        // Play gather sound when bending over to pick up resource
+        if (AudioManager.I != null)
+            AudioManager.I.PlayPenguinGather();
+
         yield return new WaitForSeconds(jobs.collectHold);
 
         Sprite carrySprite = null;

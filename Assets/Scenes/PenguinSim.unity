@@ -936,7 +936,6 @@ GameObject:
   - component: {fileID: 1428293511}
   - component: {fileID: 1428293512}
   - component: {fileID: 1428293513}
-  - component: {fileID: 1428293514}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -971,6 +970,8 @@ MonoBehaviour:
   ice: 0
   food: 0
   pebbles: 0
+  maxStorage: 10
+  totalPenguins: 0
   isPaused: 0
 --- !u!4 &1428293508
 Transform:
@@ -1069,28 +1070,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   maxSpawnAttempts: 10
---- !u!114 &1428293514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428293505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a5d02ee4e3bc040977c1d7cd117a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  fishingLoop: {fileID: 8300000, guid: 159949e57803a7741a7e50115346c608, type: 3}
-  iceBreakingLoop: {fileID: 8300000, guid: 2a8950ef7dd789b4c806551eea64758f, type: 3}
-  pileFishSounds:
-  - {fileID: 8300000, guid: 2e1335ce37df644499349ef4afba7a82, type: 3}
-  - {fileID: 8300000, guid: bedf2610ec53ae74ab6488f64846004c, type: 3}
-  pileIceSounds:
-  - {fileID: 8300000, guid: 577ced878e176604db47e33f9e961a66, type: 3}
-  - {fileID: 8300000, guid: a64145f23bec87e43a1430f080d0d630, type: 3}
-  placeIgloo: {fileID: 8300000, guid: ea0f2685eaa76244592f380b855e340c, type: 3}
-  sfxVolume: 1
 --- !u!1 &1820399070 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5238755893277604449, guid: 9b49b3b91dbb4df4b8c291605359fa65, type: 3}

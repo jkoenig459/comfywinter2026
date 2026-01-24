@@ -99,6 +99,10 @@ public class House : MonoBehaviour
         currentTier++;
         UpdateSprite(updateCollider: true);
 
+        // Play igloo upgrade sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayIglooUpgrade();
+
         Debug.Log($"House upgraded to Tier {currentTier}! Max penguins: {MaxPenguins}");
         return true;
     }

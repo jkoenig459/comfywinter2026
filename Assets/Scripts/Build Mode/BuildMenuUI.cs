@@ -74,6 +74,10 @@ public class BuildMenuUI : MonoBehaviour
 
     private void SelectHouse()
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         currentSelection = BuildSelection.House;
 
         if (itemName != null) itemName.text = "House";
@@ -83,6 +87,10 @@ public class BuildMenuUI : MonoBehaviour
 
     private void SelectStorage()
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         currentSelection = BuildSelection.Storage;
 
         if (itemName != null) itemName.text = "Storage";
@@ -110,6 +118,10 @@ public class BuildMenuUI : MonoBehaviour
 
     private void SelectResearch()
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         currentSelection = BuildSelection.Research;
 
         if (itemName != null) itemName.text = "Upgrade HQ";
@@ -119,6 +131,10 @@ public class BuildMenuUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         if (currentSelection == BuildSelection.None)
             return;
 

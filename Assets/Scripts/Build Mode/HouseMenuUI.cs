@@ -111,6 +111,10 @@ public class HouseMenuUI : MonoBehaviour
 
     private void OnUpgradeClicked(ClickEvent evt)
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         currentSelection = HouseSelection.Upgrade;
 
         if (currentHouse == null)
@@ -136,6 +140,10 @@ public class HouseMenuUI : MonoBehaviour
 
     private void OnAddPenguinClicked(ClickEvent evt)
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         currentSelection = HouseSelection.AddPenguin;
 
         if (currentHouse == null)
@@ -173,6 +181,10 @@ public class HouseMenuUI : MonoBehaviour
 
     private void OnBuildClicked(ClickEvent evt)
     {
+        // Play UI button click sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayUIButtonClick();
+
         if (currentSelection == HouseSelection.None)
             return;
 
@@ -273,6 +285,10 @@ public class HouseMenuUI : MonoBehaviour
 
         // Increment the penguin counter for this house
         currentHouse.IncrementPenguinCount();
+
+        // Increment global penguin count
+        if (GameManager.I != null)
+            GameManager.I.AddPenguin();
 
         Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}! ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins})");
         return true;

@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     [Header("Storage")]
     public int maxStorage = 10;
 
+    [Header("Penguins")]
+    public int totalPenguins = 0;
+    private bool musicChangedTo10Penguins = false;
+
     [Header("Pause")]
     public bool isPaused;
 
@@ -30,6 +34,13 @@ public class GameManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 8, true);
     }
 
+    private void Start()
+    {
+        // Play initial game music
+        if (AudioManager.I != null)
+            AudioManager.I.PlayMusicLoop1();
+    }
+
     public void AddIce(int amount)
     {
         ice = Mathf.Min(ice + amount, maxStorage);
@@ -43,6 +54,19 @@ public class GameManager : MonoBehaviour
     public void AddPebbles(int amount)
     {
         pebbles = Mathf.Min(pebbles + amount, maxStorage);
+    }
+
+    public void AddPenguin()
+    {
+        totalPenguins++;
+
+        // Change music to loop 2 when reaching 10 penguins
+        if (totalPenguins >= 10 && !musicChangedTo10Penguins)
+        {
+            musicChangedTo10Penguins = true;
+            if (AudioManager.I != null)
+                AudioManager.I.PlayMusicLoop2();
+        }
     }
 
     public void TogglePause()

@@ -18,6 +18,10 @@ public class MainMenuManager : MonoBehaviour
     {
         // Ensure main menu is shown and others are hidden
         ShowMainMenu();
+
+        // Play main menu music
+        if (AudioManager.I != null)
+            AudioManager.I.PlayMusicLoop3();
     }
 
     private void FixedUpdate()
@@ -34,9 +38,13 @@ public class MainMenuManager : MonoBehaviour
     // Called by Start Button
     public void OnStartButtonClicked()
     {
+        // Play start button sound
+        if (AudioManager.I != null)
+            AudioManager.I.PlayStartButton();
+
         // Play the transition animation
-        transition.SetTrigger("Transition");      
-        
+        transition.SetTrigger("Transition");
+
     }
 
     // Called by How to Play Button

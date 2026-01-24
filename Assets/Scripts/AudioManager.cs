@@ -14,6 +14,24 @@ public class AudioManager : MonoBehaviour
 
     [Header("Building")]
     public AudioClip placeIgloo;
+    public AudioClip iglooUpgrade;
+
+    [Header("Penguin Sounds")]
+    public AudioClip[] penguinChirps;
+    public AudioClip penguinGather;
+
+    [Header("Resource Sounds")]
+    public AudioClip pebblePickup01;
+    public AudioClip pebblePickup02;
+
+    [Header("UI Sounds")]
+    public AudioClip uiButtonClick;
+    public AudioClip startButtonClick;
+
+    [Header("Music")]
+    public AudioClip musicLoop1;
+    public AudioClip musicLoop2;
+    public AudioClip musicLoop3;
 
     [Header("Settings")]
     [Range(0f, 1f)] public float musicVolume = 1f;
@@ -31,6 +49,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         I = this;
+        DontDestroyOnLoad(gameObject);
 
         sfxSource = gameObject.AddComponent<AudioSource>();
         sfxSource.playOnAwake = false;
@@ -115,5 +134,68 @@ public class AudioManager : MonoBehaviour
     public void PlayPlaceIgloo()
     {
         PlayResourceSFX(placeIgloo);
+    }
+
+    public void PlayIglooUpgrade()
+    {
+        PlayResourceSFX(iglooUpgrade);
+    }
+
+    public void PlayPenguinChirp()
+    {
+        if (penguinChirps == null || penguinChirps.Length == 0) return;
+        var clip = penguinChirps[Random.Range(0, penguinChirps.Length)];
+        PlayPenguinSFX(clip);
+    }
+
+    public void PlayPenguinGather()
+    {
+        PlayPenguinSFX(penguinGather);
+    }
+
+    public void PlayPebblePickup()
+    {
+        // Randomly play one of the two pebble sounds
+        AudioClip clip = Random.Range(0, 2) == 0 ? pebblePickup01 : pebblePickup02;
+        PlayResourceSFX(clip);
+    }
+
+    public void PlayUIButtonClick()
+    {
+        if (uiButtonClick == null) return;
+        sfxSource.PlayOneShot(uiButtonClick, musicVolume);
+    }
+
+    public void PlayStartButton()
+    {
+        if (startButtonClick == null) return;
+        sfxSource.PlayOneShot(startButtonClick, musicVolume);
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (musicSource == null || clip == null) return;
+
+        if (musicSource.clip == clip && musicSource.isPlaying)
+            return;
+
+        musicSource.clip = clip;
+        musicSource.volume = musicVolume;
+        musicSource.Play();
+    }
+
+    public void PlayMusicLoop1()
+    {
+        PlayMusic(musicLoop1);
+    }
+
+    public void PlayMusicLoop2()
+    {
+        PlayMusic(musicLoop2);
+    }
+
+    public void PlayMusicLoop3()
+    {
+        PlayMusic(musicLoop3);
     }
 }

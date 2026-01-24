@@ -64,7 +64,13 @@ public class SelectionManager : MonoBehaviour
         selected = sel;
 
         if (selected != null)
+        {
             selected.SetSelected(true);
+
+            // Play penguin chirp when selecting a penguin
+            if (AudioManager.I != null)
+                AudioManager.I.PlayPenguinChirp();
+        }
     }
 
     public GameObject SelectedObject => selected ? selected.gameObject : null;
