@@ -80,6 +80,14 @@ public class House : MonoBehaviour
         if (circleCollider == null)
             circleCollider = GetComponentInChildren<CircleCollider2D>();
 
+        // Add YSorter for proper draw order
+        if (GetComponent<YSorter>() == null)
+        {
+            var ySorter = gameObject.AddComponent<YSorter>();
+            // Houses render slightly behind penguins at same Y position
+            ySorter.sortingOrderOffset = -10;
+        }
+
         // Only update sprite on awake, don't update collider
         // Collider should use prefab settings on initial spawn
         UpdateSprite(updateCollider: false);

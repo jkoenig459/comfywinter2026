@@ -20,6 +20,8 @@ public class PenguinMover : MonoBehaviour
     [SerializeField] private float gridPadding = 8f;
     [SerializeField] private int maxIterations = 2000;
 
+    private bool ignoreCollisions = false;
+
     private Rigidbody2D rb;
     private Vector2 moveTarget;
     private bool hasTarget;
@@ -201,6 +203,8 @@ public class PenguinMover : MonoBehaviour
 
     private bool HasClearPathFromBuildings(Vector2 from, Vector2 to)
     {
+        if (ignoreCollisions) return true;  // Skip collision check during spawn
+
         Vector2 direction = to - from;
         float distance = direction.magnitude;
 
@@ -317,7 +321,7 @@ public class PenguinMover : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 Vector2 worldPos = gridOrigin + new Vector2(x * gridCellSize, y * gridCellSize);
-                bool walkable = !Physics2D.OverlapCircle(worldPos, checkRadius, buildingsLayer);
+                bool walkable = ignoreCollisions || !Physics2D.OverlapCircle(worldPos, checkRadius, buildingsLayer);
                 grid[x, y] = new PathNode(x, y, walkable, worldPos);
             }
         }
@@ -556,6 +560,11 @@ public class PenguinMover : MonoBehaviour
     }
 
     public Vector2 Position => rb.position;
+
+    public void SetIgnoreCollisions(bool ignore)
+    {
+        ignoreCollisions = ignore;
+    }
 
     private void OnDrawGizmos()
     {
