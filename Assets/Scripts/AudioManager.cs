@@ -179,6 +179,7 @@ public class AudioManager : MonoBehaviour
         if (musicSource.clip == clip && musicSource.isPlaying)
             return;
 
+        musicSource.Stop();
         musicSource.clip = clip;
         musicSource.volume = musicVolume;
         musicSource.Play();
