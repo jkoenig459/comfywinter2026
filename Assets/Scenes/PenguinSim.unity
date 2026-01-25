@@ -127,6 +127,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 654863977127510269, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: workVolume
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 654863977127510269, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: footstepVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 654863977127510269, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
+      propertyPath: iceBreakingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f2d708eb30b15034cb79e00b7d508e9a, type: 3}
     - target: {fileID: 3888193284424340061, guid: 45c659ac553132b45a0ce05b12245ba4, type: 3}
       propertyPath: dropoffPoint
       value: 
@@ -246,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: orthographic size
-      value: 7.546875
+      value: 6.525
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -821,7 +833,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 082296d5233466f4b99b3ca5b9e5bd6a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
