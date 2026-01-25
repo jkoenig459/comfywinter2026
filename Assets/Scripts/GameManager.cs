@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         if (totalPenguins >= 20 && !endGameTriggered)
         {
             endGameTriggered = true;
+            if (AudioManager.I != null)
+                AudioManager.I.StopAllAudio();
             if (endGameTransition != null)
                 endGameTransition.SetActive(true);
         }

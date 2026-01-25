@@ -199,4 +199,29 @@ public class AudioManager : MonoBehaviour
     {
         PlayMusic(musicLoop3);
     }
+
+    public void StopAllAudio()
+    {
+        // Stop AudioManager's audio sources and clear clips
+        if (musicSource != null)
+        {
+            musicSource.Stop();
+            musicSource.clip = null;
+        }
+
+        if (sfxSource != null)
+        {
+            sfxSource.Stop();
+        }
+
+        // Stop all other AudioSources in the scene
+        AudioSource[] allAudioSources = Object.FindObjectsOfType<AudioSource>();
+        foreach (AudioSource source in allAudioSources)
+        {
+            if (source != null && source.isPlaying && source != musicSource && source != sfxSource)
+            {
+                source.Stop();
+            }
+        }
+    }
 }
