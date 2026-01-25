@@ -283,6 +283,19 @@ public class HouseMenuUI : MonoBehaviour
                 PenguinManager.I.InitializePenguin(jobs);
         }
 
+        // Set penguin to spawning mode (render behind all buildings)
+        var ySorter = newPenguin.GetComponent<YSorter>();
+        if (ySorter != null)
+        {
+            // Use a very low sorting order to ensure penguin is behind all buildings
+            // With sortingOrderMultiplier=100, -1000 is equivalent to Y=10 which is very high up
+            ySorter.EnterSpawningMode(-1000);
+
+            // Start the spawn mover to walk penguin to open area
+            var spawner = newPenguin.AddComponent<PenguinSpawnMover>();
+            spawner.Initialize(ySorter, newPenguin.GetComponent<PenguinMover>(), newPenguin.GetComponent<PenguinAnimator>());
+        }
+
         // Increment the penguin counter for this house
         currentHouse.IncrementPenguinCount();
 

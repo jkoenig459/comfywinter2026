@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 654863977127510269}
   - component: {fileID: -7173247057764269694}
   - component: {fileID: 2112275373340488320}
+  - component: {fileID: 1012975741810021724}
   m_Layer: 8
   m_Name: Penguin
   m_TagString: Untagged
@@ -174,7 +175,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1730884285
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 04071b064dbd72346af2f2745fdcafc9, type: 3}
@@ -509,3 +510,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1012975741810021724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246836616639282338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb564280b8411448a2d23e8729da427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PenguinIdleWanderer
+  minWanderDistance: 2
+  maxWanderDistance: 3
+  wanderInterval: 3
+  wanderIntervalVariance: 1
+  obstacleCheckRadius: 0.5
+  maxAttempts: 8

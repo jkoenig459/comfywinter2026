@@ -60,6 +60,7 @@ public class PenguinJobs : MonoBehaviour
     private PenguinHaulJob haulJob;
 
     public bool CanAcceptOrders => true;
+    public bool IsIdle => state == JobState.Idle;
 
     private void Awake()
     {

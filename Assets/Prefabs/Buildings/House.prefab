@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1762365463819143362}
   - component: {fileID: 9023958816000467473}
   - component: {fileID: -8953082118596594547}
+  - component: {fileID: 4156125586666622871}
   m_Layer: 6
   m_Name: House
   m_TagString: Untagged
@@ -80,8 +81,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1119652073
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 7ad8bd561f63ae54aaa71a069abb92d7, type: 3}
@@ -157,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::House
   currentTier: 1
+  penguinsCreated: 0
   tier1Sprite: {fileID: 21300000, guid: 7ad8bd561f63ae54aaa71a069abb92d7, type: 3}
   tier2Sprite: {fileID: 21300000, guid: 73d251fba46af0d488e1c43077e4ebcd, type: 3}
   tier3Sprite: {fileID: 21300000, guid: 0e38e13424b3e7149a247121a3ffc40b, type: 3}
@@ -165,3 +167,17 @@ MonoBehaviour:
   penguinFishCost: 5
   penguinPebbleCost: 1
   autoResizeCollider: 1
+--- !u!114 &4156125586666622871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578947208174597678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa90624ffc873e244b1891a64ec6979b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorter
+  sortingOrderMultiplier: 100
+  sortingOrderOffset: 0
