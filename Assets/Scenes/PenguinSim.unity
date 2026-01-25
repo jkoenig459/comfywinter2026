@@ -355,7 +355,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2119679557}
   m_SourcePrefab: {fileID: 100100000, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
+--- !u!20 &265051005 stripped
 Camera:
+  m_CorrespondingSourceObject: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
+  m_PrefabInstance: {fileID: 265051004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &277906056 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7186058846937541401, guid: b885a8ba2c3bfa543960b8266ca4b403, type: 3}
@@ -550,6 +554,8 @@ Transform:
 --- !u!1 &526810145
 GameObject:
   m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
