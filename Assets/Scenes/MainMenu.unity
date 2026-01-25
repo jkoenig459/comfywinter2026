@@ -557,7 +557,7 @@ MonoBehaviour:
   musicLoop1: {fileID: 8300000, guid: 082296d5233466f4b99b3ca5b9e5bd6a, type: 3}
   musicLoop2: {fileID: 8300000, guid: cdd29a2e07482f741b85178fbca10678, type: 3}
   musicLoop3: {fileID: 8300000, guid: 66ae2344f32959d49a1f34628a4deea2, type: 3}
-  musicVolume: 1
+  musicVolume: 0.8
   penguinSFXVolume: 1
   resourceSFXVolume: 1
 --- !u!4 &185995469
