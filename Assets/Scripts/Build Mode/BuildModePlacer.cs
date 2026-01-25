@@ -13,6 +13,12 @@ public class BuildModePlacer : MonoBehaviour
     public LayerMask blockingLayers;
     public float gridSnap = 1f;
 
+    [Header("Placement Restrictions")]
+    [Tooltip("Minimum distance above nodes where houses cannot be placed")]
+    public float nodeAboveBuffer = 2f;
+    [Tooltip("Minimum distance below the HQ where houses cannot be placed")]
+    public float hqBelowBuffer = 2f;
+
     [Header("Ghost Rendering")]
     [Tooltip("Sorting layer name to force on the ghost.")]
     public string ghostSortingLayerName = "";
@@ -20,6 +26,7 @@ public class BuildModePlacer : MonoBehaviour
     public int ghostSortingOrder = 1000;
 
     private Camera cam;
+    private ResourceNode[] cachedNodes;
 
     private GameObject selectedPrefab;
     private GameObject selectedGhostPrefab;
@@ -34,6 +41,12 @@ public class BuildModePlacer : MonoBehaviour
     {
         I = this;
         cam = Camera.main;
+        RefreshNodeCache();
+    }
+
+    private void RefreshNodeCache()
+    {
+        cachedNodes = FindObjectsByType<ResourceNode>(FindObjectsSortMode.None);
     }
 
     private void Update()
@@ -70,6 +83,9 @@ public class BuildModePlacer : MonoBehaviour
             Debug.LogWarning("BuildModePlacer: Missing prefab/ghost prefab assignment.");
             return;
         }
+
+        // Refresh node cache in case nodes were added/removed
+        RefreshNodeCache();
 
         ghost = Instantiate(selectedGhostPrefab);
         ghost.name = "BuildGhost";
@@ -124,6 +140,18 @@ public class BuildModePlacer : MonoBehaviour
     private bool CanPlaceHere()
     {
         if (ghostCollider == null) return false;
+
+        // Check if any part of ghost is outside camera view
+        if (!IsFullyInCameraView())
+            return false;
+
+        // Check if placement is too close above any node
+        if (IsAboveNode())
+            return false;
+
+        // Check if placement is too close below the HQ
+        if (IsBelowHQ())
+            return false;
 
         bool wasEnabled = ghostCollider.enabled;
         if (!wasEnabled) ghostCollider.enabled = true;
@@ -207,6 +235,98 @@ public class BuildModePlacer : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    private bool IsFullyInCameraView()
+    {
+        if (cam == null || ghostCollider == null) return true;
+
+        Bounds bounds = ghostCollider.bounds;
+
+        // Check all four corners of the bounds
+        Vector3[] corners = new Vector3[4];
+        corners[0] = new Vector3(bounds.min.x, bounds.min.y, 0); // bottom-left
+        corners[1] = new Vector3(bounds.max.x, bounds.min.y, 0); // bottom-right
+        corners[2] = new Vector3(bounds.min.x, bounds.max.y, 0); // top-left
+        corners[3] = new Vector3(bounds.max.x, bounds.max.y, 0); // top-right
+
+        foreach (var corner in corners)
+        {
+            Vector3 viewportPoint = cam.WorldToViewportPoint(corner);
+
+            // Viewport coordinates: (0,0) is bottom-left, (1,1) is top-right
+            if (viewportPoint.x < 0f || viewportPoint.x > 1f ||
+                viewportPoint.y < 0f || viewportPoint.y > 1f)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool IsAboveNode()
+    {
+        if (cachedNodes == null || ghostCollider == null) return false;
+
+        Vector2 ghostPos = ghost.transform.position;
+        Bounds bounds = ghostCollider.bounds;
+
+        foreach (var node in cachedNodes)
+        {
+            if (node == null) continue;
+
+            Vector2 nodePos = node.transform.position;
+
+            // Check if ghost is above the node (within nodeAboveBuffer units)
+            // Ghost Y should be greater than node Y (above it)
+            // And within the buffer distance
+            float yDiff = ghostPos.y - nodePos.y;
+
+            if (yDiff > 0 && yDiff <= nodeAboveBuffer)
+            {
+                // Check if there's horizontal overlap
+                // Use a reasonable horizontal range based on the ghost bounds
+                float halfWidth = bounds.extents.x + 0.5f; // add some margin
+                float xDiff = Mathf.Abs(ghostPos.x - nodePos.x);
+
+                if (xDiff < halfWidth)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool IsBelowHQ()
+    {
+        if (IglooHQ.Instance == null || ghostCollider == null) return false;
+
+        Vector2 ghostPos = ghost.transform.position;
+        Vector2 hqPos = IglooHQ.Instance.transform.position;
+        Bounds bounds = ghostCollider.bounds;
+
+        // Check if ghost is below the HQ (within hqBelowBuffer units)
+        // Ghost Y should be less than HQ Y (below it)
+        // And within the buffer distance
+        float yDiff = hqPos.y - ghostPos.y;
+
+        if (yDiff > 0 && yDiff <= hqBelowBuffer)
+        {
+            // Check if there's horizontal overlap
+            // Use a reasonable horizontal range based on the ghost bounds
+            float halfWidth = bounds.extents.x + 0.5f; // add some margin
+            float xDiff = Mathf.Abs(ghostPos.x - hqPos.x);
+
+            if (xDiff < halfWidth)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void UpdateGhostVisual(bool canPlace, bool hasIce)

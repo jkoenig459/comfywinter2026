@@ -32,5 +32,11 @@ public class PenguinManager : MonoBehaviour
         {
             penguin.gameObject.AddComponent<YSorter>();
         }
+
+        // Add idle wandering behavior if not already present
+        if (penguin.GetComponent<PenguinIdleWanderer>() == null)
+        {
+            penguin.gameObject.AddComponent<PenguinIdleWanderer>();
+        }
     }
 }
