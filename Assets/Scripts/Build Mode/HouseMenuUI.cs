@@ -283,17 +283,63 @@ public class HouseMenuUI : MonoBehaviour
                 PenguinManager.I.InitializePenguin(jobs);
         }
 
-        // Set penguin to spawning mode (render behind all buildings)
+        // Immediately move penguin to open area to avoid spawning on top of buildings
+        var mover = newPenguin.GetComponent<PenguinMover>();
+        var anim = newPenguin.GetComponent<PenguinAnimator>();
         var ySorter = newPenguin.GetComponent<YSorter>();
-        if (ySorter != null)
-        {
-            // Use a very low sorting order to ensure penguin is behind all buildings
-            // With sortingOrderMultiplier=100, -1000 is equivalent to Y=10 which is very high up
-            ySorter.EnterSpawningMode(-1000);
 
-            // Start the spawn mover to walk penguin to open area
-            var spawner = newPenguin.AddComponent<PenguinSpawnMover>();
-            spawner.Initialize(ySorter, newPenguin.GetComponent<PenguinMover>(), newPenguin.GetComponent<PenguinAnimator>());
+        if (mover != null)
+        {
+            // Find open position (now stays in camera bounds)
+            Vector2 openPos = FindOpenSpawnPosition(spawnPos);
+
+            // Set up animation before movement
+            if (anim != null)
+            {
+                anim.SetWalking();  // Start walk animation
+                anim.FaceToward(openPos, spawnPos);  // Face direction of movement
+            }
+
+            // Force penguin to render behind all buildings during spawn movement
+            if (ySorter != null)
+            {
+                ySorter.sortingOrderOffset = -10000;
+            }
+
+            // Ignore collisions during spawn movement
+            mover.SetIgnoreCollisions(true);
+
+            // Capture house Y position to check if penguin has moved clear
+            float houseY = currentHouseObject.transform.position.y;
+
+            // Command penguin to move there
+            mover.MoveTo(openPos, () => {
+                // Stop walking animation
+                if (anim != null)
+                    anim.SetIdle();
+
+                // Re-enable collisions
+                mover.SetIgnoreCollisions(false);
+
+                // Only reset sorting offset if penguin has moved well below the house
+                // This prevents penguin from appearing on top of buildings it's near
+                if (ySorter != null)
+                {
+                    float penguinY = newPenguin.transform.position.y;
+                    float yDifference = houseY - penguinY;
+
+                    // Only reset if penguin is at least 1 unit below the house
+                    if (yDifference >= 1.0f)
+                    {
+                        ySorter.sortingOrderOffset = 0; // Safe to use normal Y-sorting
+                    }
+                    else
+                    {
+                        // Keep rendering behind buildings, will auto-correct once penguin moves
+                        StartCoroutine(DelayedSortingReset(ySorter, newPenguin.transform, houseY));
+                    }
+                }
+            });
         }
 
         // Increment the penguin counter for this house
@@ -305,5 +351,80 @@ public class HouseMenuUI : MonoBehaviour
 
         Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}! ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins})");
         return true;
+    }
+
+    private System.Collections.IEnumerator DelayedSortingReset(YSorter ySorter, Transform penguin, float houseY)
+    {
+        // Wait and check periodically if penguin has moved clear
+        for (int i = 0; i < 20; i++) // Check for up to 2 seconds
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            if (ySorter == null || penguin == null) yield break;
+
+            float penguinY = penguin.position.y;
+            float yDifference = houseY - penguinY;
+
+            // Reset once penguin is 1 unit below house OR has moved significantly away
+            if (yDifference >= 1.0f)
+            {
+                ySorter.sortingOrderOffset = 0;
+                yield break;
+            }
+        }
+
+        // After timeout, reset anyway
+        if (ySorter != null)
+            ySorter.sortingOrderOffset = 0;
+    }
+
+    private Vector2 FindOpenSpawnPosition(Vector3 startPos)
+    {
+        // Get camera bounds
+        Camera cam = Camera.main;
+        if (cam == null) return (Vector2)startPos + Vector2.down * 2f;
+
+        float camHeight = cam.orthographicSize * 2f;
+        float camWidth = camHeight * cam.aspect;
+        Vector2 camCenter = cam.transform.position;
+
+        float margin = 0.5f; // Keep penguins away from screen edge
+        float minX = camCenter.x - (camWidth / 2f) + margin;
+        float maxX = camCenter.x + (camWidth / 2f) - margin;
+        float minY = camCenter.y - (camHeight / 2f) + margin;
+        float maxY = camCenter.y + (camHeight / 2f) - margin;
+
+        // Search in expanding rings for open area
+        int buildingsLayer = LayerMask.GetMask("Buildings");
+        float searchRadius = 1.5f;
+        int numRings = 3;
+        int pointsPerRing = 12;
+
+        for (int ring = 1; ring <= numRings; ring++)
+        {
+            float radius = searchRadius * ring;
+            for (int i = 0; i < pointsPerRing; i++)
+            {
+                float angle = (i / (float)pointsPerRing) * 360f * Mathf.Deg2Rad;
+                Vector2 testPos = (Vector2)startPos + new Vector2(
+                    Mathf.Cos(angle) * radius,
+                    Mathf.Sin(angle) * radius
+                );
+
+                // Clamp to camera bounds
+                testPos.x = Mathf.Clamp(testPos.x, minX, maxX);
+                testPos.y = Mathf.Clamp(testPos.y, minY, maxY);
+
+                // Check if position is free of buildings
+                if (!Physics2D.OverlapCircle(testPos, 0.3f, buildingsLayer))
+                    return testPos;
+            }
+        }
+
+        // Fallback: clamp spawn position to camera bounds
+        Vector2 fallback = (Vector2)startPos + Vector2.down * 2f;
+        fallback.x = Mathf.Clamp(fallback.x, minX, maxX);
+        fallback.y = Mathf.Clamp(fallback.y, minY, maxY);
+        return fallback;
     }
 }
