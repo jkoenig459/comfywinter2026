@@ -1514,7 +1514,7 @@ MonoBehaviour:
   food: 0
   pebbles: 0
   maxStorage: 10
-  totalPenguins: 19
+  totalPenguins: 1
   endGameTransition: {fileID: 526810145}
   isPaused: 0
 --- !u!4 &1428293508
