@@ -34,15 +34,12 @@ public class PenguinIceJob : MonoBehaviour
         node = nodeTransform;
         resourceNode = node.GetComponent<ResourceNode>();
 
-        // Check if node can accept more workers
         if (resourceNode != null && !resourceNode.CanAcceptWorker)
         {
-            // Node is full, can't work here
             jobs.SetStateIdle();
             return;
         }
 
-        // Register this penguin with the node and get assigned worker position
         Transform workerPos = null;
         if (resourceNode != null)
         {
@@ -54,7 +51,6 @@ public class PenguinIceJob : MonoBehaviour
 
         pile = jobs.GetOrCreatePileAt(node.position, jobs.icePilePrefab, jobs.icePileOffset);
 
-        // Determine position based on assigned worker position or fallback
         Vector2 stand = GetWorkPosition();
 
         anim.SetWalking();
@@ -70,23 +66,19 @@ public class PenguinIceJob : MonoBehaviour
 
     private Vector2 GetWorkPosition()
     {
-        // If node has assigned worker position (leftWorker/rightWorker child transforms), use that
         if (assignedWorkerPosition != null)
         {
             return assignedWorkerPosition.position;
         }
 
-        // Otherwise fall back to offset system (for nodes without child transforms)
         if (resourceNode != null && !resourceNode.IsFirstWorker(jobs))
         {
-            // Second worker - flip to opposite side
             Vector2 baseOffset = mover.iceOffset;
             Vector2 flippedOffset = new Vector2(-baseOffset.x, baseOffset.y);
             return mover.GetStandPosition(node.position, flippedOffset);
         }
         else
         {
-            // First worker - use normal position
             return mover.GetStandPosition(node.position, mover.iceOffset);
         }
     }
@@ -101,7 +93,6 @@ public class PenguinIceJob : MonoBehaviour
                 continue;
             }
 
-            // Play ice breaking sound at start of cycle with optional delay
             if (iceBreakingSoundDelay > 0f)
                 yield return new WaitForSeconds(iceBreakingSoundDelay);
 
@@ -148,7 +139,6 @@ public class PenguinIceJob : MonoBehaviour
             routine = null;
         }
 
-        // Unregister from the node
         if (resourceNode != null && jobs != null)
         {
             resourceNode.UnregisterWorker(jobs);

@@ -80,11 +80,9 @@ public class BuildModePlacer : MonoBehaviour
 
         if (selectedGhostPrefab == null || selectedPrefab == null)
         {
-            Debug.LogWarning("BuildModePlacer: Missing prefab/ghost prefab assignment.");
             return;
         }
 
-        // Refresh node cache in case nodes were added/removed
         RefreshNodeCache();
 
         ghost = Instantiate(selectedGhostPrefab);
@@ -506,7 +504,6 @@ public class BuildModePlacer : MonoBehaviour
 
             if (pebble != null)
             {
-                Debug.Log($"BuildModePlacer: Destroying pebble at {pebble.transform.position} to make room for house");
                 Destroy(pebble.gameObject);
             }
         }

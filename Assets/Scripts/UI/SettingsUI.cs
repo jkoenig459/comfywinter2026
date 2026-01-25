@@ -46,7 +46,6 @@ public class SettingsUI : MonoBehaviour
     {
         if (uiDocument == null)
         {
-            Debug.LogError("SettingsUI: Missing UIDocument.");
             enabled = false;
             return;
         }
@@ -54,25 +53,16 @@ public class SettingsUI : MonoBehaviour
         root = uiDocument.rootVisualElement;
         root.pickingMode = PickingMode.Position;
 
-        // Find sliders
         musicSlider = root.Q<Slider>("MusicSlider");
         penguinSFXSlider = root.Q<Slider>("PenguinSFXSlider");
         resourceSFXSlider = root.Q<Slider>("ResourceSFXSlider");
 
-        // Find labels
         musicLabel = root.Q<Label>("MusicLabel");
         penguinSFXLabel = root.Q<Label>("PenguinSFXLabel");
         resourceSFXLabel = root.Q<Label>("ResourceSFXLabel");
 
-        // Find close button
         closeButton = root.Q<Button>("CloseButton");
 
-        // Log warnings for missing elements
-        if (musicSlider == null) Debug.LogError("SettingsUI: Missing Slider 'MusicSlider'.");
-        if (penguinSFXSlider == null) Debug.LogError("SettingsUI: Missing Slider 'PenguinSFXSlider'.");
-        if (resourceSFXSlider == null) Debug.LogError("SettingsUI: Missing Slider 'ResourceSFXSlider'.");
-
-        // Register callbacks
         if (musicSlider != null)
         {
             musicSlider.RegisterValueChangedCallback(OnMusicVolumeChanged);

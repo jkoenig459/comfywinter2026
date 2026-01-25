@@ -37,7 +37,6 @@ public class SettingsButton : MonoBehaviour
     {
         if (uiDocument == null)
         {
-            Debug.LogError("SettingsButton: Missing UIDocument.");
             enabled = false;
             return;
         }
@@ -48,7 +47,6 @@ public class SettingsButton : MonoBehaviour
 
         if (settingsButton == null)
         {
-            Debug.LogError("SettingsButton: Missing Button 'SettingsButton' in UI.");
             return;
         }
 
@@ -68,8 +66,6 @@ public class SettingsButton : MonoBehaviour
         if (settingsButton == null || customButtonSprite == null)
             return;
 
-        // Apply custom sprite via USS style
-        // The sprite needs to be converted to a background image
         var background = new StyleBackground(customButtonSprite);
         settingsButton.style.backgroundImage = background;
     }
@@ -79,10 +75,6 @@ public class SettingsButton : MonoBehaviour
         if (settingsUI != null)
         {
             settingsUI.Open();
-        }
-        else
-        {
-            Debug.LogWarning("SettingsButton: SettingsUI reference not assigned!");
         }
     }
 }

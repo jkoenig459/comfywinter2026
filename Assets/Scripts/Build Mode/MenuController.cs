@@ -61,12 +61,8 @@ public class MenuController : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(menuId))
         {
-            Debug.LogError($"{name}: MenuController menuId is empty.");
             return;
         }
-
-        if (registry.ContainsKey(menuId) && registry[menuId] != this)
-            Debug.LogWarning($"{name}: Duplicate MenuController menuId '{menuId}'. Replacing existing registration.");
 
         registry[menuId] = this;
     }
@@ -85,7 +81,6 @@ public class MenuController : MonoBehaviour
         menuRoot = root.Q<VisualElement>(menuRootName);
         if (menuRoot == null)
         {
-            Debug.LogError($"{name}: MenuController missing VisualElement named '{menuRootName}'.");
             enabled = false;
             return;
         }

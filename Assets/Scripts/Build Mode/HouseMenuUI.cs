@@ -56,16 +56,12 @@ public class HouseMenuUI : MonoBehaviour
     {
         currentHouseObject = house;
         currentHouse = house != null ? house.GetComponent<House>() : null;
-
-        if (currentHouse == null && house != null)
-            Debug.LogWarning("HouseMenuUI: Target house has no House component.");
     }
 
     private void Bind()
     {
         if (uiDocument == null)
         {
-            Debug.LogError("HouseMenuUI: Missing UIDocument.");
             enabled = false;
             return;
         }
@@ -80,13 +76,6 @@ public class HouseMenuUI : MonoBehaviour
         upgradeBtn = root.Q<Button>("HouseUpgradeBtn");
         addPenguinBtn = root.Q<Button>("AddPenguinBtn");
         buildBtn = root.Q<Button>("BuildBtn");
-
-        if (itemName == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemName'.");
-        if (itemDesc == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemDesc'.");
-        if (itemCost == null) Debug.LogError("HouseMenuUI: Missing Label 'ItemCost'.");
-        if (upgradeBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'HouseUpgradeBtn'.");
-        if (addPenguinBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'AddPenguinBtn'.");
-        if (buildBtn == null) Debug.LogError("HouseMenuUI: Missing Button 'BuildBtn'.");
 
         if (upgradeBtn != null) upgradeBtn.RegisterCallback<ClickEvent>(OnUpgradeClicked);
         if (addPenguinBtn != null) addPenguinBtn.RegisterCallback<ClickEvent>(OnAddPenguinClicked);
@@ -111,7 +100,6 @@ public class HouseMenuUI : MonoBehaviour
 
     private void OnUpgradeClicked(ClickEvent evt)
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -140,7 +128,6 @@ public class HouseMenuUI : MonoBehaviour
 
     private void OnAddPenguinClicked(ClickEvent evt)
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -156,16 +143,13 @@ public class HouseMenuUI : MonoBehaviour
 
         if (itemName != null) itemName.text = "+1 Penguin";
 
-        // Check if house is at max capacity
         if (!currentHouse.CanCreatePenguin)
         {
-            // At max tier and max penguins
             if (!currentHouse.CanUpgrade)
             {
                 if (itemDesc != null) itemDesc.text = $"This house has reached the maximum of {currentHouse.MaxPenguins} penguins!";
                 if (itemCost != null) itemCost.text = "";
             }
-            // Can upgrade to get more penguin slots
             else
             {
                 if (itemDesc != null) itemDesc.text = "This house is full! Upgrade the house to create more penguins.";
@@ -174,14 +158,12 @@ public class HouseMenuUI : MonoBehaviour
             return;
         }
 
-        // Can create penguin
         if (itemDesc != null) itemDesc.text = $"Spawn a new penguin at this house. ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins} created)";
         if (itemCost != null) itemCost.text = $"{currentHouse.penguinFishCost} Fish, {currentHouse.penguinPebbleCost} Pebble";
     }
 
     private void OnBuildClicked(ClickEvent evt)
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -206,13 +188,11 @@ public class HouseMenuUI : MonoBehaviour
     {
         if (currentHouse == null)
         {
-            Debug.LogWarning("HouseMenuUI: No target house set.");
             return false;
         }
 
         if (!currentHouse.CanUpgrade)
         {
-            Debug.Log("HouseMenuUI: House is already at max tier.");
             return false;
         }
 
@@ -220,13 +200,11 @@ public class HouseMenuUI : MonoBehaviour
 
         if (GameManager.I == null || GameManager.I.ice < cost)
         {
-            Debug.Log($"HouseMenuUI: Not enough ice. Need {cost}, have {GameManager.I?.ice ?? 0}");
             return false;
         }
 
         if (currentHouse.TryUpgrade())
         {
-            Debug.Log($"HouseMenuUI: House upgraded to tier {currentHouse.CurrentTier}!");
             return true;
         }
 
@@ -237,20 +215,16 @@ public class HouseMenuUI : MonoBehaviour
     {
         if (currentHouse == null)
         {
-            Debug.LogWarning("HouseMenuUI: No target house set.");
             return false;
         }
 
-        // Check if house can create more penguins
         if (!currentHouse.CanCreatePenguin)
         {
-            Debug.Log($"HouseMenuUI: House is at max capacity ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins}).");
             return false;
         }
 
         if (penguinPrefab == null)
         {
-            Debug.LogError("HouseMenuUI: Penguin prefab not assigned!");
             return false;
         }
 
@@ -259,20 +233,17 @@ public class HouseMenuUI : MonoBehaviour
 
         if (GameManager.I == null)
         {
-            Debug.LogWarning("HouseMenuUI: GameManager not found.");
             return false;
         }
 
         if (GameManager.I.food < fishCost || GameManager.I.pebbles < pebbleCost)
         {
-            Debug.Log($"HouseMenuUI: Not enough resources. Need {fishCost} fish and {pebbleCost} pebbles. Have {GameManager.I.food} fish and {GameManager.I.pebbles} pebbles.");
             return false;
         }
 
         GameManager.I.food -= fishCost;
         GameManager.I.pebbles -= pebbleCost;
 
-        // Spawn 1 unit lower on Y (additional offset beyond spawnOffset)
         Vector3 spawnPos = currentHouseObject.transform.position + (Vector3)spawnOffset + new Vector3(0f, -1f, 0f);
         GameObject newPenguin = Instantiate(penguinPrefab, spawnPos, Quaternion.identity);
 
@@ -283,80 +254,63 @@ public class HouseMenuUI : MonoBehaviour
                 PenguinManager.I.InitializePenguin(jobs);
         }
 
-        // Immediately move penguin to open area to avoid spawning on top of buildings
         var mover = newPenguin.GetComponent<PenguinMover>();
         var anim = newPenguin.GetComponent<PenguinAnimator>();
         var ySorter = newPenguin.GetComponent<YSorter>();
 
         if (mover != null)
         {
-            // Find open position (now stays in camera bounds)
             Vector2 openPos = FindOpenSpawnPosition(spawnPos);
 
-            // Set up animation before movement
             if (anim != null)
             {
-                anim.SetWalking();  // Start walk animation
-                anim.FaceToward(openPos, spawnPos);  // Face direction of movement
+                anim.SetWalking();
+                anim.FaceToward(openPos, spawnPos);
             }
 
-            // Force penguin to render behind all buildings during spawn movement
             if (ySorter != null)
             {
                 ySorter.sortingOrderOffset = -10000;
             }
 
-            // Ignore collisions during spawn movement
             mover.SetIgnoreCollisions(true);
 
-            // Capture house Y position to check if penguin has moved clear
             float houseY = currentHouseObject.transform.position.y;
 
-            // Command penguin to move there
             mover.MoveTo(openPos, () => {
-                // Stop walking animation
                 if (anim != null)
                     anim.SetIdle();
 
-                // Re-enable collisions
                 mover.SetIgnoreCollisions(false);
 
-                // Only reset sorting offset if penguin has moved well below the house
-                // This prevents penguin from appearing on top of buildings it's near
                 if (ySorter != null)
                 {
                     float penguinY = newPenguin.transform.position.y;
                     float yDifference = houseY - penguinY;
 
-                    // Only reset if penguin is at least 1 unit below the house
                     if (yDifference >= 1.0f)
                     {
-                        ySorter.sortingOrderOffset = 0; // Safe to use normal Y-sorting
+                        ySorter.sortingOrderOffset = 0;
                     }
                     else
                     {
-                        // Keep rendering behind buildings, will auto-correct once penguin moves
                         StartCoroutine(DelayedSortingReset(ySorter, newPenguin.transform, houseY));
                     }
                 }
             });
         }
 
-        // Increment the penguin counter for this house
         currentHouse.IncrementPenguinCount();
 
-        // Increment global penguin count
         if (GameManager.I != null)
             GameManager.I.AddPenguin();
 
-        Debug.Log($"HouseMenuUI: Penguin spawned at {spawnPos}! ({currentHouse.PenguinsCreated}/{currentHouse.MaxPenguins})");
         return true;
     }
 
     private System.Collections.IEnumerator DelayedSortingReset(YSorter ySorter, Transform penguin, float houseY)
     {
-        // Wait and check periodically if penguin has moved clear
-        for (int i = 0; i < 20; i++) // Check for up to 2 seconds
+        for (int i = 0; i < 20; i++)
         {
             yield return new WaitForSeconds(0.1f);
 
@@ -365,7 +319,6 @@ public class HouseMenuUI : MonoBehaviour
             float penguinY = penguin.position.y;
             float yDifference = houseY - penguinY;
 
-            // Reset once penguin is 1 unit below house OR has moved significantly away
             if (yDifference >= 1.0f)
             {
                 ySorter.sortingOrderOffset = 0;
@@ -373,14 +326,12 @@ public class HouseMenuUI : MonoBehaviour
             }
         }
 
-        // After timeout, reset anyway
         if (ySorter != null)
             ySorter.sortingOrderOffset = 0;
     }
 
     private Vector2 FindOpenSpawnPosition(Vector3 startPos)
     {
-        // Get camera bounds
         Camera cam = Camera.main;
         if (cam == null) return (Vector2)startPos + Vector2.down * 2f;
 
@@ -388,13 +339,12 @@ public class HouseMenuUI : MonoBehaviour
         float camWidth = camHeight * cam.aspect;
         Vector2 camCenter = cam.transform.position;
 
-        float margin = 0.5f; // Keep penguins away from screen edge
+        float margin = 0.5f;
         float minX = camCenter.x - (camWidth / 2f) + margin;
         float maxX = camCenter.x + (camWidth / 2f) - margin;
         float minY = camCenter.y - (camHeight / 2f) + margin;
         float maxY = camCenter.y + (camHeight / 2f) - margin;
 
-        // Search in expanding rings for open area
         int buildingsLayer = LayerMask.GetMask("Buildings");
         float searchRadius = 1.5f;
         int numRings = 3;
@@ -411,17 +361,14 @@ public class HouseMenuUI : MonoBehaviour
                     Mathf.Sin(angle) * radius
                 );
 
-                // Clamp to camera bounds
                 testPos.x = Mathf.Clamp(testPos.x, minX, maxX);
                 testPos.y = Mathf.Clamp(testPos.y, minY, maxY);
 
-                // Check if position is free of buildings
                 if (!Physics2D.OverlapCircle(testPos, 0.3f, buildingsLayer))
                     return testPos;
             }
         }
 
-        // Fallback: clamp spawn position to camera bounds
         Vector2 fallback = (Vector2)startPos + Vector2.down * 2f;
         fallback.x = Mathf.Clamp(fallback.x, minX, maxX);
         fallback.y = Mathf.Clamp(fallback.y, minY, maxY);

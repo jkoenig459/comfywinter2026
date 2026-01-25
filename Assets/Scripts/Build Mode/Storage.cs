@@ -102,7 +102,6 @@ public class Storage : MonoBehaviour
         GameManager.I.ice -= cost;
         currentTier++;
 
-        // Update GameManager's max storage capacity
         if (GameManager.I != null)
         {
             GameManager.I.maxStorage = CurrentCapacity;
@@ -110,7 +109,6 @@ public class Storage : MonoBehaviour
 
         UpdateVisuals();
 
-        Debug.Log($"Storage upgraded to Tier {currentTier}! Capacity: {CurrentCapacity}");
         return true;
     }
 
@@ -119,7 +117,6 @@ public class Storage : MonoBehaviour
         if (spriteRenderer == null)
             return;
 
-        // Tier 0 - hide the storage visuals
         if (currentTier == 0)
         {
             spriteRenderer.enabled = false;
@@ -128,10 +125,8 @@ public class Storage : MonoBehaviour
 
         spriteRenderer.enabled = true;
 
-        // Determine if storage is "full" based on current resources
         bool isFull = IsStorageFull();
 
-        // Set sprite based on tier and full state
         if (currentTier == 1)
         {
             spriteRenderer.sprite = isFull ? tier1FullSprite : tier1EmptySprite;
@@ -150,7 +145,6 @@ public class Storage : MonoBehaviour
         int currentCapacity = CurrentCapacity;
         float threshold = currentCapacity * fullThreshold;
 
-        // Check if any resource is above the threshold
         return GameManager.I.ice >= threshold ||
                GameManager.I.food >= threshold ||
                GameManager.I.pebbles >= threshold;

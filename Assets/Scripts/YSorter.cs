@@ -31,25 +31,16 @@ public class YSorter : MonoBehaviour
             return;
         }
 
-        // Convert Y position to sorting order
-        // Lower Y = higher sorting order (renders in front)
-        // Multiply by -1 so objects lower on screen appear in front
         int sortingOrder = Mathf.RoundToInt(-cachedTransform.position.y * sortingOrderMultiplier) + sortingOrderOffset;
         spriteRenderer.sortingOrder = sortingOrder;
     }
 
-    /// <summary>
-    /// Enter spawning mode: render at a fixed sorting order (behind spawning house)
-    /// </summary>
     public void EnterSpawningMode(int sortingOrder)
     {
         isSpawning = true;
         spawningSortingOrder = sortingOrder;
     }
 
-    /// <summary>
-    /// Exit spawning mode: resume normal Y-based sorting
-    /// </summary>
     public void ExitSpawningMode()
     {
         isSpawning = false;

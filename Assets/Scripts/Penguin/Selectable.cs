@@ -31,7 +31,6 @@ public class Selectable : MonoBehaviour
             }
         }
 
-        // Start disabled
         if (highlight != null) highlight.enabled = false;
         if (outlineFx != null) outlineFx.enabled = false;
     }

@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Temporary component added to penguins when they spawn from a house.
-/// Moves the penguin to an open area (not overlapping with any building),
-/// then exits spawning mode and destroys itself.
-/// </summary>
 public class PenguinSpawnMover : MonoBehaviour
 {
     [SerializeField] private LayerMask buildingsLayer;
@@ -25,18 +20,15 @@ public class PenguinSpawnMover : MonoBehaviour
         anim = penguinAnim;
         initialized = true;
 
-        // Get the buildings layer from BuildModePlacer (same layer used for placement validation)
         if (BuildModePlacer.I != null)
         {
             buildingsLayer = BuildModePlacer.I.blockingLayers;
         }
         else
         {
-            // Fallback to common layer name
             buildingsLayer = LayerMask.GetMask("Buildings");
         }
 
-        // Start moving to open area
         StartMoveToOpenArea();
     }
 
@@ -46,14 +38,12 @@ public class PenguinSpawnMover : MonoBehaviour
 
         Vector2 currentPos = transform.position;
 
-        // Check if already in open area
         if (IsInOpenArea(currentPos))
         {
             FinishSpawning();
             return;
         }
 
-        // Find nearest open area
         Vector2? openPos = FindNearestOpenArea(currentPos);
 
         if (openPos.HasValue)
@@ -65,7 +55,6 @@ public class PenguinSpawnMover : MonoBehaviour
         }
         else
         {
-            // No open area found, just finish spawning
             FinishSpawning();
         }
     }
@@ -88,20 +77,17 @@ public class PenguinSpawnMover : MonoBehaviour
             anim.SetIdle();
         }
 
-        // Destroy this temporary component
         Destroy(this);
     }
 
     private bool IsInOpenArea(Vector2 pos)
     {
-        // Check if there are any buildings overlapping this position
         Collider2D hit = Physics2D.OverlapCircle(pos, checkRadius, buildingsLayer);
         return hit == null;
     }
 
     private Vector2? FindNearestOpenArea(Vector2 fromPos)
     {
-        // Search in expanding rings for an open position
         for (int ring = 1; ring <= 5; ring++)
         {
             float currentRadius = searchRadius * ring * 0.5f;
@@ -125,7 +111,6 @@ public class PenguinSpawnMover : MonoBehaviour
     {
         if (!initialized) return;
 
-        // If we're moving and we reach an open area, finish early
         if (movingToOpenArea && IsInOpenArea(transform.position))
         {
             mover?.Stop();

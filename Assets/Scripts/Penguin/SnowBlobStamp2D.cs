@@ -42,7 +42,6 @@ public class SnowBlobStamps2D : MonoBehaviour
 
         if (!stampsPS)
         {
-            Debug.LogError("SnowBlobStamps2D: stampsPS not assigned and could not find ParticleSystem.", this);
             enabled = false;
             return;
         }

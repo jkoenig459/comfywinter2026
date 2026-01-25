@@ -55,7 +55,6 @@ public class PebbleSpawner : MonoBehaviour
     {
         if (pebblePrefab == null)
         {
-            Debug.LogWarning("PebbleSpawner: No pebble prefab assigned.");
             return;
         }
 

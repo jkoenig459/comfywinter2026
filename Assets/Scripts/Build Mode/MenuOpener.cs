@@ -10,7 +10,6 @@ public class MenuOpener : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        // Block clicks while in build placement mode
         if (BuildModePlacer.I != null && BuildModePlacer.I.IsPlacing)
             return;
 
@@ -19,7 +18,6 @@ public class MenuOpener : MonoBehaviour
 
         if (!MenuController.TryGet(targetMenuId, out var menu) || menu == null)
         {
-            Debug.LogWarning($"{name}: No MenuController registered with id '{targetMenuId}'.");
             return;
         }
 

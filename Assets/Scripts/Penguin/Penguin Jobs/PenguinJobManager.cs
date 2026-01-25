@@ -80,7 +80,7 @@ public class PenguinJobs : MonoBehaviour
         carryVis.HideCarried();
         anim.SetCarrying(false);
         state = JobState.Idle;
-        mover.UnlockPhysics(); // Start with unlocked physics (idle state)
+        mover.UnlockPhysics();
     }
 
     private void Update()
@@ -189,32 +189,32 @@ public class PenguinJobs : MonoBehaviour
     internal void SetStateFishing()
     {
         state = JobState.Fishing;
-        mover.LockPhysics(); // Lock physics so fishing penguins can't be pushed by building placement
+        mover.LockPhysics();
     }
 
     internal void SetStateCuttingIce()
     {
         state = JobState.CuttingIce;
-        mover.LockPhysics(); // Lock physics so ice cutting penguins can't be pushed by building placement
+        mover.LockPhysics();
     }
 
     internal void SetStateCollecting()
     {
         state = JobState.CollectingFromPile;
-        mover.UnlockPhysics(); // Unlock physics when hauling (can be pushed)
+        mover.UnlockPhysics();
     }
 
     internal void SetStateReturning()
     {
         state = JobState.ReturningToDropoff;
-        mover.UnlockPhysics(); // Unlock physics when hauling (can be pushed)
+        mover.UnlockPhysics();
     }
 
     internal void SetStateIdle()
     {
         state = JobState.Idle;
         anim.SetIdle();
-        mover.UnlockPhysics(); // Unlock physics when idle
+        mover.UnlockPhysics();
     }
 
     internal bool IsFishingState => state == JobState.Fishing;
@@ -265,6 +265,6 @@ public class PenguinJobs : MonoBehaviour
 
         state = JobState.Idle;
         anim.SetIdle();
-        mover.UnlockPhysics(); // Unlock physics when canceling work
+        mover.UnlockPhysics();
     }
 }

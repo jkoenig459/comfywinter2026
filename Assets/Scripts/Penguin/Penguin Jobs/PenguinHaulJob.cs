@@ -95,7 +95,6 @@ public class PenguinHaulJob : MonoBehaviour
     {
         anim.PlayCollecting();
 
-        // Play gather sound when bending over to pick up resource
         if (AudioManager.I != null)
             AudioManager.I.PlayPenguinGather();
 
@@ -152,7 +151,6 @@ public class PenguinHaulJob : MonoBehaviour
             carryVis.ShowCarried(carrySprite);
             anim.SetCarrying(true);
 
-            // Play pebble pickup sound
             if (AudioManager.I != null)
                 AudioManager.I.PlayPebblePickup();
         }
@@ -180,7 +178,6 @@ public class PenguinHaulJob : MonoBehaviour
         {
             anim.PlayCollecting();
 
-            // Play gather sound when bending over to pick up resource
             if (AudioManager.I != null)
                 AudioManager.I.PlayPenguinGather();
 
@@ -213,14 +210,11 @@ public class PenguinHaulJob : MonoBehaviour
             bool reachedDropoff = false;
             mover.MoveTo(drop, () => { reachedDropoff = true; });
 
-            // Wait for the penguin to reach dropoff
             while (!reachedDropoff)
                 yield return null;
 
-            // Don't clear pile reference when depositing during continuous collection
             DepositCarried(clearReferences: false);
 
-            // Check if pile still has items before looping
             if (pickupPile == null || pickupPile.IsEmpty)
             {
                 pickupPile = null;
@@ -228,7 +222,6 @@ public class PenguinHaulJob : MonoBehaviour
                 break;
             }
 
-            // Move back to pile for next collection
             jobs.SetStateCollecting();
             Vector2 stand = mover.GetStandPosition(pickupPile.transform.position, mover.defaultWorkOffset);
             jobs.SetLookAt(pickupPile.transform.position);
@@ -238,7 +231,6 @@ public class PenguinHaulJob : MonoBehaviour
             bool reachedPile = false;
             mover.MoveTo(stand, () => { reachedPile = true; });
 
-            // Wait for the penguin to reach the pile
             while (!reachedPile)
                 yield return null;
         }
@@ -251,7 +243,6 @@ public class PenguinHaulJob : MonoBehaviour
     {
         anim.PlayCollecting();
 
-        // Play gather sound when bending over to pick up resource
         if (AudioManager.I != null)
             AudioManager.I.PlayPenguinGather();
 
@@ -324,7 +315,6 @@ public class PenguinHaulJob : MonoBehaviour
             routine = null;
         }
 
-        // Drop the item if carrying something
         if (carryingAmount > 0 && droppedResourcePrefab != null)
         {
             DropCarriedItem();
@@ -349,10 +339,8 @@ public class PenguinHaulJob : MonoBehaviour
         Vector2 dropPosition = mover.Position;
         GameObject droppedObj = Instantiate(droppedResourcePrefab, dropPosition, Quaternion.identity);
 
-        // Make sure it's on the default layer so raycasts can hit it
         droppedObj.layer = 0;
 
-        // Ensure it has a Rigidbody2D for collider detection
         var rb = droppedObj.GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -361,7 +349,6 @@ public class PenguinHaulJob : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.gravityScale = 0f;
 
-        // Ensure collider is set as trigger so penguin can walk over it
         var collider = droppedObj.GetComponent<Collider2D>();
         if (collider != null)
         {

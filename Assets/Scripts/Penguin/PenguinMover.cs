@@ -164,7 +164,6 @@ public class PenguinMover : MonoBehaviour
         Vector2 pos = rb.position;
         float distanceToTarget = (moveTarget - pos).magnitude;
 
-        // Check if we've arrived (same threshold as original: 0.01 sqrMagnitude = 0.1 distance)
         if ((pos - moveTarget).sqrMagnitude <= 0.01f)
         {
             hasTarget = false;
@@ -178,7 +177,6 @@ public class PenguinMover : MonoBehaviour
             return;
         }
 
-        // Periodically recalculate path to handle dynamic buildings
         pathRecalculateTimer -= Time.fixedDeltaTime;
         bool pathBlocked = IsCurrentPathBlockedByBuilding();
 
@@ -188,7 +186,6 @@ public class PenguinMover : MonoBehaviour
             RecalculatePath();
         }
 
-        // Follow the path
         FollowPath();
     }
 
@@ -203,14 +200,13 @@ public class PenguinMover : MonoBehaviour
 
     private bool HasClearPathFromBuildings(Vector2 from, Vector2 to)
     {
-        if (ignoreCollisions) return true;  // Skip collision check during spawn
+        if (ignoreCollisions) return true;
 
         Vector2 direction = to - from;
         float distance = direction.magnitude;
 
         if (distance < 0.01f) return true;
 
-        // Only check against buildings layer
         RaycastHit2D hit = Physics2D.CircleCast(from, penguinRadius * 0.8f, direction.normalized, distance, buildingsLayer);
         return hit.collider == null;
     }
@@ -220,7 +216,6 @@ public class PenguinMover : MonoBehaviour
         Vector2 pos = rb.position;
         Vector2 directionToTarget = (moveTarget - pos).normalized;
 
-        // If no path or path completed, move directly to target
         if (currentPath == null || currentPath.Count == 0 || currentWaypointIndex >= currentPath.Count)
         {
             Vector2 nextPos = pos + directionToTarget * moveSpeed * Time.fixedDeltaTime;
@@ -229,7 +224,6 @@ public class PenguinMover : MonoBehaviour
             return;
         }
 
-        // Try to skip waypoints via line-of-sight to buildings only
         for (int i = currentPath.Count - 1; i > currentWaypointIndex; i--)
         {
             if (HasClearPathFromBuildings(pos, currentPath[i]))
@@ -239,7 +233,6 @@ public class PenguinMover : MonoBehaviour
             }
         }
 
-        // Also check if we can go directly to target
         if (HasClearPathFromBuildings(pos, moveTarget))
         {
             currentPath.Clear();
@@ -260,7 +253,6 @@ public class PenguinMover : MonoBehaviour
         Vector2 currentWaypoint = currentPath[currentWaypointIndex];
         float distanceToWaypoint = Vector2.Distance(pos, currentWaypoint);
 
-        // Move to next waypoint if close enough
         if (distanceToWaypoint <= 0.2f)
         {
             currentWaypointIndex++;
@@ -274,7 +266,6 @@ public class PenguinMover : MonoBehaviour
             currentWaypoint = currentPath[currentWaypointIndex];
         }
 
-        // Move toward current waypoint
         Vector2 direction = (currentWaypoint - pos).normalized;
         Vector2 next = pos + direction * moveSpeed * Time.fixedDeltaTime;
         Velocity = (next - pos) / Time.fixedDeltaTime;
@@ -283,23 +274,19 @@ public class PenguinMover : MonoBehaviour
 
     private void RecalculatePath()
     {
-        // Check if there's a building between us and the target
         if (HasClearPathFromBuildings(rb.position, moveTarget))
         {
-            // No buildings in the way, just go directly
             currentPath.Clear();
             currentWaypointIndex = 0;
             return;
         }
 
-        // Need to path around buildings
         currentPath = FindPath(rb.position, moveTarget);
         currentWaypointIndex = 0;
     }
 
     private List<Vector2> FindPath(Vector2 startPos, Vector2 endPos)
     {
-        // Calculate grid bounds
         float minX = Mathf.Min(startPos.x, endPos.x) - gridPadding;
         float maxX = Mathf.Max(startPos.x, endPos.x) + gridPadding;
         float minY = Mathf.Min(startPos.y, endPos.y) - gridPadding;
@@ -312,7 +299,6 @@ public class PenguinMover : MonoBehaviour
         gridWidth = Mathf.Min(gridWidth, 150);
         gridHeight = Mathf.Min(gridHeight, 150);
 
-        // Create grid - only check buildings layer
         PathNode[,] grid = new PathNode[gridWidth, gridHeight];
         float checkRadius = penguinRadius + gridCellSize * 0.25f;
 
@@ -332,11 +318,9 @@ public class PenguinMover : MonoBehaviour
         if (startNode == null || endNode == null)
             return new List<Vector2>();
 
-        // Start and end must be walkable
         startNode.walkable = true;
         endNode.walkable = true;
 
-        // Run A*
         List<Vector2> path = AStar(grid, startNode, endNode, gridWidth, gridHeight);
 
         if (path.Count > 0)
@@ -460,7 +444,6 @@ public class PenguinMover : MonoBehaviour
         List<Vector2> smoothed = new List<Vector2>();
         int currentIndex = 0;
 
-        // Find first visible point from start
         for (int i = path.Count - 1; i >= 0; i--)
         {
             if (HasClearPathFromBuildings(rb.position, path[i]))
@@ -495,12 +478,10 @@ public class PenguinMover : MonoBehaviour
 
     public void MoveTo(Vector2 worldPos, System.Action arriveCallback = null)
     {
-        // Check if the destination is on a building
         Collider2D buildingAtTarget = Physics2D.OverlapCircle(worldPos, 0.1f, buildingsLayer);
 
         if (buildingAtTarget != null)
         {
-            // Find nearest walkable position around the building
             worldPos = FindNearestWalkablePosition(worldPos, buildingAtTarget);
         }
 
@@ -513,7 +494,6 @@ public class PenguinMover : MonoBehaviour
 
     private Vector2 FindNearestWalkablePosition(Vector2 targetPos, Collider2D building)
     {
-        // Try positions in a circle around the target
         float searchRadius = 0.5f;
         int searchSteps = 16;
 
@@ -526,7 +506,6 @@ public class PenguinMover : MonoBehaviour
                 float angle = (i / (float)searchSteps) * 360f * Mathf.Deg2Rad;
                 Vector2 testPos = targetPos + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * currentRadius;
 
-                // Check if this position is walkable (not on a building)
                 if (!Physics2D.OverlapCircle(testPos, penguinRadius, buildingsLayer))
                 {
                     return testPos;
@@ -534,7 +513,6 @@ public class PenguinMover : MonoBehaviour
             }
         }
 
-        // If no walkable position found, return original position
         return targetPos;
     }
 
@@ -566,10 +544,6 @@ public class PenguinMover : MonoBehaviour
         ignoreCollisions = ignore;
     }
 
-    /// <summary>
-    /// Lock the penguin's position so it cannot be pushed by physics.
-    /// Used for working penguins (fishing, sawing) that should not be displaced by building placement.
-    /// </summary>
     public void LockPhysics()
     {
         if (rb != null)
@@ -578,10 +552,6 @@ public class PenguinMover : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Unlock the penguin's position so it can be affected by physics normally.
-    /// Used for idle penguins that can be pushed by building placement.
-    /// </summary>
     public void UnlockPhysics()
     {
         if (rb != null)

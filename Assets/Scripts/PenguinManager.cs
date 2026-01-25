@@ -27,13 +27,11 @@ public class PenguinManager : MonoBehaviour
         penguin.fishPilePrefab = fishPilePrefab;
         penguin.icePilePrefab = icePilePrefab;
 
-        // Add Y-position sorting if not already present
         if (penguin.GetComponent<YSorter>() == null)
         {
             penguin.gameObject.AddComponent<YSorter>();
         }
 
-        // Add idle wandering behavior if not already present
         if (penguin.GetComponent<PenguinIdleWanderer>() == null)
         {
             penguin.gameObject.AddComponent<PenguinIdleWanderer>();

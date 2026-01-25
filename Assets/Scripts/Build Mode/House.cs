@@ -80,16 +80,12 @@ public class House : MonoBehaviour
         if (circleCollider == null)
             circleCollider = GetComponentInChildren<CircleCollider2D>();
 
-        // Add YSorter for proper draw order
         if (GetComponent<YSorter>() == null)
         {
             var ySorter = gameObject.AddComponent<YSorter>();
-            // Houses render slightly behind penguins at same Y position
             ySorter.sortingOrderOffset = -10;
         }
 
-        // Only update sprite on awake, don't update collider
-        // Collider should use prefab settings on initial spawn
         UpdateSprite(updateCollider: false);
     }
 
@@ -107,11 +103,9 @@ public class House : MonoBehaviour
         currentTier++;
         UpdateSprite(updateCollider: true);
 
-        // Play igloo upgrade sound
         if (AudioManager.I != null)
             AudioManager.I.PlayIglooUpgrade();
 
-        Debug.Log($"House upgraded to Tier {currentTier}! Max penguins: {MaxPenguins}");
         return true;
     }
 
@@ -119,7 +113,6 @@ public class House : MonoBehaviour
     {
         if (spriteRenderer == null) return;
 
-        // Store the bottom position before changing sprite
         Vector2 oldBottom = GetSpriteBottom();
 
         Sprite targetSprite = currentTier switch
@@ -134,7 +127,6 @@ public class House : MonoBehaviour
         {
             spriteRenderer.sprite = targetSprite;
 
-            // Adjust position to keep bottom anchored
             Vector2 newBottom = GetSpriteBottom();
             Vector2 offset = oldBottom - newBottom;
             transform.position += (Vector3)offset;
@@ -160,21 +152,16 @@ public class House : MonoBehaviour
         if (!autoResizeCollider) return;
         if (circleCollider == null || sprite == null) return;
 
-        // Calculate radius from sprite dimensions
-        // Use the larger dimension (width or height) divided by 2
         float width = sprite.rect.width / sprite.pixelsPerUnit;
         float height = sprite.rect.height / sprite.pixelsPerUnit;
         float newRadius = Mathf.Max(width, height) * 0.5f;
 
-        // Calculate offset: distance from pivot to sprite's rect center
         Vector2 rectCenter = new Vector2(sprite.rect.width * 0.5f, sprite.rect.height * 0.5f);
         Vector2 pivotToCenter = rectCenter - sprite.pivot;
         Vector2 newOffset = pivotToCenter / sprite.pixelsPerUnit;
 
         circleCollider.radius = newRadius;
         circleCollider.offset = newOffset;
-
-        Debug.Log($"Updated collider for tier {currentTier}: radius={newRadius}, offset={newOffset}");
     }
 
     public string GetUpgradeDescription()

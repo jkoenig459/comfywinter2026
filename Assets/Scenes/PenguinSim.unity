@@ -1417,6 +1417,7 @@ MonoBehaviour:
   pebbles: 0
   maxStorage: 10
   totalPenguins: 0
+  endGameTransition: {fileID: 526810145}
   isPaused: 0
 --- !u!4 &1428293508
 Transform:
@@ -1476,6 +1477,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   gridSnap: 1
+  nodeAboveBuffer: 2
+  hqBelowBuffer: 2
   ghostSortingLayerName: Ghost
   ghostSortingOrder: 1000
 --- !u!114 &1428293512

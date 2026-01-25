@@ -12,7 +12,6 @@ public class PenguinCarryVisual : MonoBehaviour
     {
         if (!carrySocket)
         {
-            Debug.LogWarning("CarrySocket not assigned on PenguinCarryVisual.");
             return;
         }
 

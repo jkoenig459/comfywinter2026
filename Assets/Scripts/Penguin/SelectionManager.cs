@@ -21,7 +21,6 @@ public class SelectionManager : MonoBehaviour
         I = this;
         cam = Camera.main;
 
-        // Invert the Resources layer so it is ignored
         selectionMask = ~LayerMask.GetMask("Resources");
     }
 
@@ -44,8 +43,6 @@ public class SelectionManager : MonoBehaviour
             selectionMask
         );
 
-        Debug.Log($"Click at world {world}, hit: {(hit.collider ? hit.collider.name : "none")}");
-
         if (!hit.collider)
         {
             SetSelected(null);
@@ -67,7 +64,6 @@ public class SelectionManager : MonoBehaviour
         {
             selected.SetSelected(true);
 
-            // Play penguin chirp when selecting a penguin
             if (AudioManager.I != null)
                 AudioManager.I.PlayPenguinChirp();
         }

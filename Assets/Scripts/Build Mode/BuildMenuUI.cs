@@ -74,7 +74,6 @@ public class BuildMenuUI : MonoBehaviour
 
     private void SelectHouse()
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -87,7 +86,6 @@ public class BuildMenuUI : MonoBehaviour
 
     private void SelectStorage()
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -95,7 +93,6 @@ public class BuildMenuUI : MonoBehaviour
 
         if (itemName != null) itemName.text = "Storage";
 
-        // Check if storage exists
         if (Storage.I == null)
         {
             if (itemDesc != null) itemDesc.text = "Storage system not found!";
@@ -103,7 +100,6 @@ public class BuildMenuUI : MonoBehaviour
             return;
         }
 
-        // Check if can upgrade
         if (!Storage.I.CanUpgrade)
         {
             if (itemDesc != null) itemDesc.text = "Storage is already at maximum capacity!";
@@ -111,14 +107,12 @@ public class BuildMenuUI : MonoBehaviour
             return;
         }
 
-        // Show upgrade info
         if (itemDesc != null) itemDesc.text = Storage.I.GetUpgradeDescription();
         if (itemCost != null) itemCost.text = $"{Storage.I.UpgradeCost} Ice";
     }
 
     private void SelectResearch()
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -131,7 +125,6 @@ public class BuildMenuUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        // Play UI button click sound
         if (AudioManager.I != null)
             AudioManager.I.PlayUIButtonClick();
 
@@ -164,13 +157,11 @@ public class BuildMenuUI : MonoBehaviour
     {
         if (Storage.I == null)
         {
-            Debug.LogWarning("BuildMenuUI: Storage system not found.");
             return false;
         }
 
         if (!Storage.I.CanUpgrade)
         {
-            Debug.Log("BuildMenuUI: Storage is already at max tier.");
             return false;
         }
 
@@ -178,13 +169,11 @@ public class BuildMenuUI : MonoBehaviour
 
         if (GameManager.I == null || GameManager.I.ice < cost)
         {
-            Debug.Log($"BuildMenuUI: Not enough ice. Need {cost}, have {GameManager.I?.ice ?? 0}");
             return false;
         }
 
         if (Storage.I.TryUpgrade())
         {
-            Debug.Log($"BuildMenuUI: Storage upgraded to tier {Storage.I.CurrentTier}!");
             return true;
         }
 
