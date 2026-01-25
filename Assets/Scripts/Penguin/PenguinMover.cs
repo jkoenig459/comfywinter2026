@@ -566,6 +566,30 @@ public class PenguinMover : MonoBehaviour
         ignoreCollisions = ignore;
     }
 
+    /// <summary>
+    /// Lock the penguin's position so it cannot be pushed by physics.
+    /// Used for working penguins (fishing, sawing) that should not be displaced by building placement.
+    /// </summary>
+    public void LockPhysics()
+    {
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+    }
+
+    /// <summary>
+    /// Unlock the penguin's position so it can be affected by physics normally.
+    /// Used for idle penguins that can be pushed by building placement.
+    /// </summary>
+    public void UnlockPhysics()
+    {
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;

@@ -76,6 +76,14 @@ public class PenguinIdleWanderer : MonoBehaviour
         // Accumulate idle time
         idleTimer += Time.deltaTime;
 
+        // Check if idle penguin is out of camera bounds and return them immediately
+        // Only check after being idle for at least 0.5 seconds to avoid triggering on spawn
+        if (!isWandering && idleTimer > 0.5f && !IsWithinCameraBounds(transform.position))
+        {
+            TryReturnToCameraBounds();
+            return; // Skip normal wandering this frame
+        }
+
         // Only start wandering if been idle long enough
         if (idleTimer < minIdleTimeBeforeWander)
         {
@@ -166,7 +174,8 @@ public class PenguinIdleWanderer : MonoBehaviour
         Vector3 viewportPos = mainCamera.WorldToViewportPoint(pos);
 
         // Check if within bounds (0-1 for viewport, with padding)
-        float paddingViewport = cameraPadding / mainCamera.orthographicSize;
+        // orthographicSize is half-height, so full height is orthographicSize * 2
+        float paddingViewport = cameraPadding / (mainCamera.orthographicSize * 2f);
 
         return viewportPos.x > paddingViewport &&
                viewportPos.x < (1f - paddingViewport) &&
@@ -187,5 +196,86 @@ public class PenguinIdleWanderer : MonoBehaviour
         wanderTimer = wanderInterval + Random.Range(-wanderIntervalVariance, wanderIntervalVariance);
         // Ensure timer is never negative
         wanderTimer = Mathf.Max(0.5f, wanderTimer);
+    }
+
+    /// <summary>
+    /// Tries to return the penguin to camera bounds when pushed out.
+    /// Finds a safe position within camera bounds and walks there.
+    /// </summary>
+    private void TryReturnToCameraBounds()
+    {
+        Vector2 currentPos = transform.position;
+        Vector2? returnPos = FindPositionWithinCameraBounds(currentPos);
+
+        if (returnPos.HasValue)
+        {
+            isWandering = true;
+            anim?.SetWalking();
+            anim?.FaceToward(returnPos.Value, currentPos);
+            mover.MoveTo(returnPos.Value, OnWanderComplete);
+        }
+    }
+
+    /// <summary>
+    /// Finds a valid position within camera bounds, starting from the penguin's current position
+    /// and moving toward the center of the camera view.
+    /// </summary>
+    private Vector2? FindPositionWithinCameraBounds(Vector2 fromPos)
+    {
+        if (mainCamera == null) return null;
+
+        // Get camera center in world space
+        Vector3 cameraCenter = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        Vector2 centerPos = new Vector2(cameraCenter.x, cameraCenter.y);
+
+        // Calculate direction from current position toward camera center
+        Vector2 directionToCenter = (centerPos - fromPos).normalized;
+
+        // Try positions moving toward the center
+        for (float distance = 0.5f; distance <= 5f; distance += 0.5f)
+        {
+            Vector2 testPos = fromPos + directionToCenter * distance;
+
+            // Check if this position is within camera bounds and not on a building
+            if (IsWithinCameraBounds(testPos))
+            {
+                // Check for buildings
+                Collider2D hit = Physics2D.OverlapCircle(testPos, obstacleCheckRadius, buildingsLayer);
+                if (hit == null)
+                {
+                    return testPos;
+                }
+            }
+        }
+
+        // If no position found moving toward center, try the camera center itself
+        if (IsWithinCameraBounds(centerPos))
+        {
+            Collider2D hit = Physics2D.OverlapCircle(centerPos, obstacleCheckRadius, buildingsLayer);
+            if (hit == null)
+            {
+                return centerPos;
+            }
+        }
+
+        // Last resort: try random positions within camera bounds
+        for (int attempt = 0; attempt < maxAttempts * 2; attempt++)
+        {
+            // Generate random position within camera viewport
+            float randomX = Random.Range(0.2f, 0.8f);
+            float randomY = Random.Range(0.2f, 0.8f);
+            Vector3 randomViewportPos = new Vector3(randomX, randomY, mainCamera.nearClipPlane);
+            Vector3 randomWorldPos = mainCamera.ViewportToWorldPoint(randomViewportPos);
+            Vector2 testPos = new Vector2(randomWorldPos.x, randomWorldPos.y);
+
+            // Check if this position is valid
+            Collider2D hit = Physics2D.OverlapCircle(testPos, obstacleCheckRadius, buildingsLayer);
+            if (hit == null)
+            {
+                return testPos;
+            }
+        }
+
+        return null;
     }
 }
