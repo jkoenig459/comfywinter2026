@@ -60,5 +60,8 @@ TagManager:
   - name: Ghost
     uniqueID: 4248521341
     locked: 0
+  - name: Snow
+    uniqueID: 1230314023
+    locked: 0
   m_RenderingLayers:
   - Default

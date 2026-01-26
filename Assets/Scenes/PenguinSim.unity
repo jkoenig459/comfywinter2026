@@ -379,15 +379,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: m_SortMode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: m_RenderMode
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: m_MotionVectors
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1230314023
       objectReference: {fileID: 0}
     - target: {fileID: 4471956125229315643, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: m_NormalDirection
@@ -395,11 +407,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6014009109802456123, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: prewarm
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6014009109802456123, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: ShapeModule.type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014009109802456123, guid: 48e95498d32815344baae03fa762ec12, type: 3}
+      propertyPath: UVModule.uvChannelMask
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6014009109802456123, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: InitialModule.gravitySource
@@ -420,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 6014009109802456123, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7846785684884111154, guid: 48e95498d32815344baae03fa762ec12, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7846785684884111154, guid: 48e95498d32815344baae03fa762ec12, type: 3}
       propertyPath: m_LocalPosition.x
@@ -814,7 +834,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000177743bd43cdd49853112bf4ff1fc17b7d4a3bfd
+  m_ApplyToSortingLayers: 00000000177743bd43cdd49853112bf4ff1fc17b7d4a3bfd271a5549
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2075,9 +2095,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 581268351754550485, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 581268351754550485, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 581268351754550485, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1874060144539688612, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
       propertyPath: m_Name
       value: SnowStampPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236483407635935382, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236483407635935382, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236483407635935382, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7944682741216727267, guid: eeb097498c4af9144b458dd480f1b0e5, type: 3}
       propertyPath: m_LocalPosition.x
