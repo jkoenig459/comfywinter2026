@@ -333,7 +333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: orthographic size
-      value: 5.78125
+      value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 8297917926357811279, guid: 37c78ed1af5375d4ebb586e14b1b127f, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -2256,11 +2256,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 265051004}
+  - {fileID: 7928133474060474654}
   - {fileID: 619394802}
   - {fileID: 1102576102}
   - {fileID: 1428293508}
   - {fileID: 5244793039722523267}
-  - {fileID: 7928133474060474654}
   - {fileID: 183724995}
   - {fileID: 8137519045057923801}
   - {fileID: 999405249}
