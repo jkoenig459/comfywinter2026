@@ -1,20 +1,16 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
-    <ui:VisualElement name="ResourcePanel" style="position: absolute; top: 50px; left: 10px; flex-direction: row; padding: 8px 12px; background-color: rgba(0, 0, 0, 0.7); border-radius: 6px; align-items: center;">
-        
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="ResourcePanel" style="position: absolute; top: 50px; left: 10px; flex-direction: row; padding: 8px 12px; background-color: rgba(138, 207, 219, 0.78); border-radius: 6px; align-items: center; border-left-color: rgb(138, 207, 219); border-right-color: rgb(138, 207, 219); border-top-color: rgb(138, 207, 219); border-bottom-color: rgb(138, 207, 219); border-top-width: 0; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; -unity-font-definition: url(&quot;project://database/Assets/Art/Font/POCO.TTF?fileID=12800000&amp;guid=fb54670267be08b44bf363feb1515047&amp;type=3#POCO&quot;); -unity-background-image-tint-color: rgb(255, 255, 255);">
+        <ui:Image style="background-image: url(&quot;project://database/Assets/Art/Sprites/Ice%20Block.png?fileID=21300000&amp;guid=9ad12920ca1edfd44bc431ccbfcbb75b&amp;type=3#Ice Block&quot;); height: 24px; width: 22px;"/>
         <ui:VisualElement name="IceContainer" style="flex-direction: row; align-items: center; margin-right: 16px;">
-            <ui:Label text="❄" style="font-size: 16px; margin-right: 4px; color: rgb(135, 206, 250);"/>
-            <ui:Label text="0" name="IceCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+            <ui:Label text="0" name="IceCount" style="font-size: 20px; color: white; min-width: 24px; -unity-text-align: middle-center; margin-top: 0; padding-top: 0; margin-bottom: 4px;"/>
         </ui:VisualElement>
-        
+        <ui:Image style="height: 25px; width: 26px; background-image: url(&quot;project://database/Assets/Art/Sprites/Fish.png?fileID=21300000&amp;guid=44ab895f49de190469959cbef24d4699&amp;type=3#Fish&quot;);"/>
         <ui:VisualElement name="FoodContainer" style="flex-direction: row; align-items: center; margin-right: 16px;">
-            <ui:Label text="🐟" style="font-size: 16px; margin-right: 4px;"/>
-            <ui:Label text="0" name="FoodCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+            <ui:Label text="0" name="FoodCount" style="font-size: 20px; color: white; min-width: 24px; -unity-text-align: middle-center; word-spacing: 0; -unity-paragraph-spacing: 0; padding-top: 0; margin-top: 0; margin-bottom: 4px;"/>
         </ui:VisualElement>
-        
         <ui:VisualElement name="PebblesContainer" style="flex-direction: row; align-items: center;">
-            <ui:Label text="●" style="font-size: 14px; margin-right: 4px; color: rgb(160, 160, 160);"/>
-            <ui:Label text="0" name="PebblesCount" style="font-size: 14px; color: white; min-width: 24px; -unity-text-align: middle-left;"/>
+            <ui:Image style="height: 31px; width: 30px; background-image: url(&quot;project://database/Assets/Art/Sprites/Shiny%20rock.png?fileID=6121337210303470225&amp;guid=5dec41adcd2b1b846a04217f55c4e918&amp;type=3#Shiny rock_1&quot;);"/>
+            <ui:Label text="0" name="PebblesCount" style="font-size: 20px; color: white; min-width: 24px; -unity-text-align: middle-center; margin-top: 0; margin-bottom: 4px; padding-top: 0;"/>
         </ui:VisualElement>
-        
     </ui:VisualElement>
 </ui:UXML>
